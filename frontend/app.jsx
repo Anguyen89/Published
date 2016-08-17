@@ -1,7 +1,7 @@
 var React = require('react');
 var NavBar = require('./navbar');
-var ImageCoursel = require('image_coursel');
-
+var ImageCoursel = require('./components/image/image_coursel');
+//
 
 
 var App = React.createClass({
@@ -13,7 +13,7 @@ var App = React.createClass({
           <NavBar/>
         </header>
         <div className="coursel-container">
-          <ImageCoursel />
+            <ImageCoursel />
         </div>
 
         {this.props.children}
