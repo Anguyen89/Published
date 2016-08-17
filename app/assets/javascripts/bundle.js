@@ -21482,6 +21482,7 @@
 
 	var React = __webpack_require__(1);
 	var NavBar = __webpack_require__(239);
+	var ImageCoursel = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"image_coursel\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -21489,7 +21490,16 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(NavBar, null),
+	      React.createElement(
+	        'header',
+	        null,
+	        React.createElement(NavBar, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'coursel-container' },
+	        React.createElement(ImageCoursel, null)
+	      ),
 	      this.props.children
 	    );
 	  }
