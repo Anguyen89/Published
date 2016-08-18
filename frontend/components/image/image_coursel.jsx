@@ -30,9 +30,9 @@ module.exports = React.createClass({
 
     return (
       <div className="image-carousel-container">
-        <div className="carousel-button" onClick={this.nextImage} />
+        <i onClick={this.nextImage} className="fa fa-arrow-left" aria-hidden="true"/>
         <img className="coursel-image" src={image}/>
-        <div className="carousel-button" onClick={this.nextImage}/>
+        <i  onClick={this.nextImage} className="fa fa-arrow-right" aria-hidden="true"/>
       </div>
     )
   }

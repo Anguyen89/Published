@@ -34027,9 +34027,9 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'image-carousel-container' },
-	      React.createElement('div', { className: 'carousel-button', onClick: this.nextImage }),
+	      React.createElement('i', { onClick: this.nextImage, className: 'fa fa-arrow-left', 'aria-hidden': 'true' }),
 	      React.createElement('img', { className: 'coursel-image', src: image }),
-	      React.createElement('div', { className: 'carousel-button', onClick: this.nextImage })
+	      React.createElement('i', { onClick: this.nextImage, className: 'fa fa-arrow-right', 'aria-hidden': 'true' })
 	    );
 	  }
 	});

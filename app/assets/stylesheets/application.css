@@ -44,14 +44,38 @@
   background-color: transparent;
 }
 
-.carousel-button {
-  display: inline-block;
+fa {
   width: 20px;
   height: 800px;
 }
-.carousel-button:hover {
+
+i.fa.fa-arrow-right{
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+i.fa.fa-arrow-left {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+
+}
+
+.fa:hover {
   background: grey;
 }
+
+/*i.fa.fa-arrow-right:hover{
+  display: flex;
+  align-items: center;
+}
+
+i.fa.fa-arrow-left:hover {
+  display: flex;
+  align-items: center;
+
+}*/
 
 /*.carousel-button {
   display: none;
