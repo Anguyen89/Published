@@ -1,5 +1,7 @@
 var React = require('react');
-var ImageAction = require('../../actions/image_actions');
+var ImageActions = require('../../actions/image_actions');
+var ImageStore = require('../../stores/image_store');
+
 
 
 
@@ -27,8 +29,10 @@ module.exports = React.createClass({
     var image = this.state.images[randomNumber];
 
     return (
-      <div >
-        <img className="coursel-image" onClick={this.nextImage} src={image}></img>
+      <div className="image-carousel-container">
+        <div className="carousel-button" onClick={this.nextImage} />
+        <img className="coursel-image" src={image}/>
+        <div className="carousel-button" onClick={this.nextImage}/>
       </div>
     )
   }

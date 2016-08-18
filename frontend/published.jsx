@@ -14,8 +14,8 @@ var hashHistory = ReactRouter.hashHistory;
 //Components
 var App = require('./app.jsx');
 
-window.ImageActions = require('./actions/image_actions');
-window.ImageStore = require('./stores/image_store');
+// window.ImageActions = require('./actions/image_actions');
+// window.ImageStore = require('./stores/image_store');
 
 
 

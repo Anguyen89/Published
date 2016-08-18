@@ -58,8 +58,9 @@
 	//Components
 	var App = __webpack_require__(175);
 
-	window.ImageActions = __webpack_require__(240);
-	window.ImageStore = __webpack_require__(241);
+	// window.ImageActions = require('./actions/image_actions');
+	// window.ImageStore = require('./stores/image_store');
+
 
 	var routes = React.createElement(
 	  Router,
@@ -34001,7 +34002,8 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ImageAction = __webpack_require__(240);
+	var ImageActions = __webpack_require__(240);
+	var ImageStore = __webpack_require__(241);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -34024,8 +34026,10 @@
 
 	    return React.createElement(
 	      'div',
-	      null,
-	      React.createElement('img', { className: 'coursel-image', onClick: this.nextImage, src: image })
+	      { className: 'image-carousel-container' },
+	      React.createElement('div', { className: 'carousel-button', onClick: this.nextImage }),
+	      React.createElement('img', { className: 'coursel-image', src: image }),
+	      React.createElement('div', { className: 'carousel-button', onClick: this.nextImage })
 	    );
 	  }
 	});

@@ -31,6 +31,29 @@
 	line-height: 26.4px;
 }
 
+.image-carousel-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+
+}
+
 .coursel-image {
   height: 800px;
+  width: 1200px;
+  background-color: transparent;
 }
+
+.carousel-button {
+  display: inline-block;
+  width: 20px;
+  height: 800px;
+}
+.carousel-button:hover {
+  background: grey;
+}
+
+/*.carousel-button {
+  display: none;
+  background-color: transparent;
+}*/
