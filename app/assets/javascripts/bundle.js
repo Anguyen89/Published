@@ -27207,6 +27207,9 @@
 	    this.ImageStoreListener = ImageStore.addListener(this._onChange);
 	    ImageActions.fetchImages();
 	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ImageStoreListener.remove();
+	  },
 	  _onChange: function _onChange() {
 	    this.setState({ images: ImageStore.all() });
 	  },

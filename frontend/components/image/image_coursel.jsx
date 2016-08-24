@@ -17,6 +17,10 @@ module.exports = React.createClass({
     ImageActions.fetchImages();
   },
 
+  componentWillUnmount(){
+    this.ImageStoreListener.remove();
+  },
+
   _onChange(){
     this.setState({images: ImageStore.all()})
   },
