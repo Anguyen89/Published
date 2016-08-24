@@ -14,5 +14,5 @@ images = Image.create!([
   {image_url: "https://hd.unsplash.com/photo-1457365050282-c53d772ef8b2"},
   {image_url: "https://hd.unsplash.com/photo-1467321638755-7246fd0dc1f3"},
   {image_url: "https://hd.unsplash.com/photo-1465479423260-c4afc24172c6"},
-  {image_url: "https://hd.unsplash.com/photo-1462524500090-89443873e2b4"}
+  {image_url: "https://hd.unsplash.com/photo-1464695110811-dcf3903dc2f4"}
 ])
