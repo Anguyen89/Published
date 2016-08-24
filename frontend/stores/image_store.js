@@ -16,6 +16,10 @@ var resetImages = function(images){
   });
 };
 
+var addImage = function(image){
+  _images[image.id] = image;
+};
+
 ImageStore.all = function(){
   return _images;
 },
@@ -26,6 +30,11 @@ ImageStore.__onDispatch = function(payload){
     case ImageConstants.RECEIVE_IMAGES:
       resetImages(payload.images);
       this.__emitChange();
+      break;
+    case ImageConstants.RECEIVE_IMAGE:
+      addImage(payload.image);
+      this.__emitChange();
+      break;
   }
 };
 

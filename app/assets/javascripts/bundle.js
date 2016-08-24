@@ -27160,30 +27160,29 @@
 /* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
-	// var PostActions = require('../actions/post_actions');
-
+	var ImageActions = __webpack_require__(242);
 
 	var Upload = React.createClass({
-	  displayName: "Upload",
+	  displayName: 'Upload',
 
 	  upload: function upload(e) {
 	    e.preventDefault();
 
 	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
 	      if (error, images) {
-	        var picture = { url: images[0].url };
-	        PostActions.createPost(picture);
+	        var picture = { image_url: images[0].url };
+	        ImageActions.createPost(picture);
 	      }
 	    });
 	  },
 
 	  render: function render() {
-	    return React.createElement("img", { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Aiga_uparrow_inv.svg/500px-Aiga_uparrow_inv.svg.png",
+	    return React.createElement('img', { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Aiga_uparrow_inv.svg/500px-Aiga_uparrow_inv.svg.png',
 	      onClick: this.upload,
-	      className: "upload-icon" });
+	      className: 'upload-icon' });
 	  }
 	});
 
@@ -27249,6 +27248,17 @@
 	      actionType: ImageConstants.RECEIVE_IMAGES,
 	      images: images
 	    });
+	  },
+
+	  createPost: function createPost(image) {
+	    ApiUtil.createPost(image);
+	  },
+
+	  receivePost: function receivePost(image) {
+	    AppDispatcher.dispatch({
+	      actionType: ImageConstants.RECEIVE_IMAGE,
+	      image: image
+	    });
 	  }
 	};
 
@@ -27263,6 +27273,14 @@
 	    $.ajax({
 	      url: "api/images",
 	      type: "GET",
+	      success: cb
+	    });
+	  },
+	  createPost: function createPost(image, cb) {
+	    $.ajax({
+	      url: "api/images",
+	      type: "POST",
+	      data: { image: image },
 	      success: cb
 	    });
 	  }
@@ -27594,7 +27612,8 @@
 	"use strict";
 
 	module.exports = {
-	  RECEIVE_IMAGES: "RECEIVE_IMAGES"
+	  RECEIVE_IMAGES: "RECEIVE_IMAGES",
+	  RECEIVE_IMAGE: "RECEIVE_IMAGE"
 	};
 
 /***/ },
@@ -27618,6 +27637,10 @@
 	  });
 	};
 
+	var addImage = function addImage(image) {
+	  _images[image.id] = image;
+	};
+
 	ImageStore.all = function () {
 	  return _images;
 	}, ImageStore.__onDispatch = function (payload) {
@@ -27625,6 +27648,11 @@
 	    case ImageConstants.RECEIVE_IMAGES:
 	      resetImages(payload.images);
 	      this.__emitChange();
+	      break;
+	    case ImageConstants.RECEIVE_IMAGE:
+	      addImage(payload.image);
+	      this.__emitChange();
+	      break;
 	  }
 	};
 

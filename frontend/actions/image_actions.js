@@ -14,5 +14,16 @@ module.exports = {
       actionType: ImageConstants.RECEIVE_IMAGES,
       images: images
     });
+  },
+
+  createPost: function(image){
+    ApiUtil.createPost(image);
+  },
+
+  receivePost: function(image){
+    AppDispatcher.dispatch({
+      actionType: ImageConstants.RECEIVE_IMAGE,
+      image: image
+    });
   }
 };
