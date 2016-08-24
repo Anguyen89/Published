@@ -27214,7 +27214,7 @@
 	    this.forceUpdate();
 	  },
 	  render: function render() {
-	    var randomNumber = Math.floor(Math.random() * this.state.images.length) + 1;
+	    var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
 	    var image = this.state.images[randomNumber];
 
 	    return React.createElement(
