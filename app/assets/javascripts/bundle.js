@@ -59,12 +59,17 @@
 	window.SessionStore = __webpack_require__(267);
 
 	//Components
-	var App = __webpack_require__(238);
+	var App = __webpack_require__(296);
+	var Home = __webpack_require__(298);
 
 	var routes = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(Route, { path: '/', component: App })
+	  React.createElement(
+	    Route,
+	    { path: '/', component: App },
+	    React.createElement(IndexRoute, { component: Home })
+	  )
 	);
 
 	document.addEventListener("DOMContentLoaded", function () {
@@ -27098,134 +27103,8 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var NavBar = __webpack_require__(239);
-	var ImageCoursel = __webpack_require__(248);
-	// var Upload = require("./components/upload");
-
-
-	var App = React.createClass({
-	  displayName: 'App',
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'header',
-	        { className: 'header-nav' },
-	        React.createElement(NavBar, null)
-	      ),
-	      this.props.children
-	    );
-	  }
-	});
-
-	module.exports = App;
-
-/***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var Upload = __webpack_require__(240);
-	var SessionStore = __webpack_require__(267);
-	var SessionActions = __webpack_require__(273);
-	var ErrorStore = __webpack_require__(268);
-	var Login = __webpack_require__(271);
-	var SignUp = __webpack_require__(272);
-
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	  getInitialState: function getInitialState() {
-	    return {
-	      currentUser: SessionStore.currentUser(),
-	      errors: ErrorStore.all()
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.sessionStoreListener = SessionStore.addListener(this.onChange);
-	    this.errorStoreListener = ErrorStore.addListener(this.onErrorChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.sessionStoreListener.remove();
-	    this.errorStoreListener.remove();
-	  },
-	  onChange: function onChange() {
-	    this.setState({ currentUser: SessionStore.currentUser() });
-	  },
-	  onErrorChange: function onErrorChange() {
-	    this.setState({ errors: ErrorStore.all() });
-	  },
-	  handleLogout: function handleLogout() {
-	    SessionActions.logout();
-	  },
-	  render: function render() {
-	    var navContent;
-	    if (this.state.currentUser) {
-	      navContent = React.createElement(
-	        'ul',
-	        null,
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(Upload, null)
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            'a',
-	            { className: 'nav-logout', onClick: this.handleLogout },
-	            'Logout'
-	          )
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            'a',
-	            { className: 'user-profile-button', onClick: this.redirectToProfile },
-	            'You'
-	          )
-	        )
-	      );
-	    } else {
-	      navContent = React.createElement(
-	        'ul',
-	        null,
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(Login, null)
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(SignUp, null)
-	        )
-	      );
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'nav-container' },
-	      React.createElement(
-	        'a',
-	        { className: 'home-button', onClick: this.goToHome },
-	        'Published'
-	      ),
-	      navContent
-	    );
-	  }
-	});
-
-/***/ },
+/* 238 */,
+/* 239 */,
 /* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27698,12 +27577,6 @@
 	  _onChange: function _onChange() {
 	    this.setState({ images: ImageStore.all() });
 	  },
-
-
-	  // nextImage(){
-	  //   this.forceUpdate();
-	  // },
-
 	  render: function render() {
 	    var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
 	    var image = this.state.images[randomNumber];
@@ -36759,6 +36632,178 @@
 	  else this.add(className)
 	}
 
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var NavBar = __webpack_require__(297);
+
+	// var Upload = require("./components/upload");
+
+
+	var App = React.createClass({
+	  displayName: 'App',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'header',
+	        { className: 'header-nav' },
+	        React.createElement(NavBar, null)
+	      ),
+	      this.props.children
+	    );
+	  }
+	});
+
+	module.exports = App;
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Upload = __webpack_require__(240);
+	var SessionStore = __webpack_require__(267);
+	var SessionActions = __webpack_require__(273);
+	var ErrorStore = __webpack_require__(268);
+	var Login = __webpack_require__(271);
+	var SignUp = __webpack_require__(272);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	  getInitialState: function getInitialState() {
+	    return {
+	      currentUser: SessionStore.currentUser(),
+	      errors: ErrorStore.all()
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.sessionStoreListener = SessionStore.addListener(this.onChange);
+	    this.errorStoreListener = ErrorStore.addListener(this.onErrorChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionStoreListener.remove();
+	    this.errorStoreListener.remove();
+	  },
+	  onChange: function onChange() {
+	    this.setState({ currentUser: SessionStore.currentUser() });
+	  },
+	  onErrorChange: function onErrorChange() {
+	    this.setState({ errors: ErrorStore.all() });
+	  },
+	  handleLogout: function handleLogout() {
+	    SessionActions.logout();
+	  },
+	  render: function render() {
+	    var navContent;
+	    if (this.state.currentUser) {
+	      navContent = React.createElement(
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(Upload, null)
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { className: 'nav-logout', onClick: this.handleLogout },
+	            'Logout'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { className: 'user-profile-button', onClick: this.redirectToProfile },
+	            'You'
+	          )
+	        )
+	      );
+	    } else {
+	      navContent = React.createElement(
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(Login, null)
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(SignUp, null)
+	        )
+	      );
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'nav-container' },
+	      React.createElement(
+	        'a',
+	        { className: 'home-button', onClick: this.goToHome },
+	        'Published'
+	      ),
+	      navContent
+	    );
+	  }
+	});
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(267);
+
+	var ImageCoursel = __webpack_require__(248);
+
+	var Home = React.createClass({
+	  displayName: 'Home',
+	  getInitialState: function getInitialState() {
+	    return { currentUser: SessionStore.currentUser() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.SessionListener = SessionStore.addListener(this.onChange);
+	  },
+	  onChange: function onChange() {
+	    this.setState({ currentUser: SessionStore.currentUser() });
+	  },
+	  render: function render() {
+	    var homeDisplay;
+	    if (this.state.currentUser) {
+	      homeDisplay = React.createElement(
+	        'div',
+	        null,
+	        'Add Profile feed here'
+	      );
+	    } else {
+	      homeDisplay = React.createElement(ImageCoursel, null);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      homeDisplay
+	    );
+	  }
+	});
+
+	module.exports = Home;
 
 /***/ }
 /******/ ]);

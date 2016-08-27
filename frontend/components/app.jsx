@@ -1,6 +1,6 @@
 var React = require('react');
 var NavBar = require('./navbar');
-var ImageCoursel = require('./components/image/image_coursel');
+
 // var Upload = require("./components/upload");
 
 

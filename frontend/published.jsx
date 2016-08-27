@@ -15,7 +15,8 @@ window.SessionStore = require('./stores/session_store');
 
 
 //Components
-var App = require('./app.jsx');
+var App = require('./components/app.jsx');
+var Home = require('./components/home.jsx');
 
 
 
@@ -24,7 +25,10 @@ var App = require('./app.jsx');
 
 var routes = (
   <Router history={hashHistory}>
-    <Route path="/" component={App}></Route>
+    <Route path="/" component={App}>
+      <IndexRoute component={Home}/>
+    </Route>
+
   </Router>
 );
 

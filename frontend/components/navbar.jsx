@@ -1,10 +1,10 @@
 var React = require('react');
-var Upload = require("./components/upload");
-var SessionStore = require('./stores/session_store');
-var SessionActions = require('./actions/session_actions');
-var ErrorStore = require('./stores/error_store');
-var Login = require('./components/forms/login');
-var SignUp = require('./components/forms/signup');
+var Upload = require("./upload");
+var SessionStore = require('../stores/session_store');
+var SessionActions = require('../actions/session_actions');
+var ErrorStore = require('../stores/error_store');
+var Login = require('./forms/login');
+var SignUp = require('./forms/signup');
 
 
 
