@@ -19,29 +19,31 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  padding-left: 500px;
 }
 
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
-  width: 800px;
+  height: 50px;
+  width: 100%;
+  padding: 0 100px 0 100px;
+  background: black;
 
 }
 
 
 .upload-icon {
-  margin-top: 20px;
-  width: 30px;
-  height: 30px;
+  /*width: 20px;
+  height: 20px;*/
+  font-size: 18px;
 
 }
 
 .nav-container:first-child {
   font-family: "Permanent Marker";
-	font-size: 75px;
+  color: white;
+	font-size: 28px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 500;

@@ -18,10 +18,11 @@ var Upload = React.createClass({
 
   render: function(){
     return (
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Aiga_uparrow_inv.svg/500px-Aiga_uparrow_inv.svg.png"
+      <a
         onClick={this.upload}
         className="upload-icon">
-      </img>
+        Upload
+      </a>
     );
   }
 });

@@ -12,10 +12,6 @@ var App = React.createClass({
         <header className="header-nav">
           <NavBar/>
         </header>
-        <div className="coursel-container">
-          <ImageCoursel />
-        </div>
-
         {this.props.children}
       </div>
     )
