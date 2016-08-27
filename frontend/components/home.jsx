@@ -20,7 +20,7 @@ var Home = React.createClass({
   render(){
     var homeDisplay;
     if (this.state.currentUser){
-      homeDisplay = (<div>Add Profile feed here</div>);
+      homeDisplay = (<div>Add Discover Component Here</div>);
     } else {
       homeDisplay = (<ImageCoursel/>);
     }

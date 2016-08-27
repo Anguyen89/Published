@@ -36728,7 +36728,7 @@
 	          React.createElement(
 	            'a',
 	            { className: 'user-profile-button', onClick: this.redirectToProfile },
-	            'You'
+	            'Profile'
 	          )
 	        )
 	      );
@@ -36789,7 +36789,7 @@
 	      homeDisplay = React.createElement(
 	        'div',
 	        null,
-	        'Add Profile feed here'
+	        'Add Discover Component Here'
 	      );
 	    } else {
 	      homeDisplay = React.createElement(ImageCoursel, null);

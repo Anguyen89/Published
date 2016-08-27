@@ -70,8 +70,8 @@
 }
 
 .coursel-image {
-  height: 800px;
-  width: 1200px;
+  height: 950px;
+  width: 1650px;
   background-color: transparent;
 }
 
@@ -96,19 +96,3 @@ i.fa.fa-arrow-left {
 .fa:hover {
   background: #D3D3D3;
 }
-
-/*i.fa.fa-arrow-right:hover{
-  display: flex;
-  align-items: center;
-}
-
-i.fa.fa-arrow-left:hover {
-  display: flex;
-  align-items: center;
-
-}*/
-
-/*.carousel-button {
-  display: none;
-  background-color: transparent;
-}*/
