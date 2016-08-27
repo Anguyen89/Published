@@ -13,7 +13,7 @@ var SessionActions = {
 	},
 
 	signup: function(loginData) {
-		SessionApiUtil.create(loginData, this.receiveCurrentUser);
+		SessionApiUtil.signup(loginData, this.receiveCurrentUser);
 	},
 
 	login: function(loginData) {
@@ -46,7 +46,6 @@ var SessionActions = {
   },
 
   removeCurrentUser: function(){
-    console.log("user has been destroyed");
     AppDispatcher.dispatch({
       actionType: UserConstants.LOGOUT,
     });

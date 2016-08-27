@@ -27332,6 +27332,14 @@
 	      type: "DELETE",
 	      success: cb
 	    });
+	  },
+	  signup: function signup(user, cb) {
+	    $.ajax({
+	      url: "api/users",
+	      type: "POST",
+	      data: { user: user },
+	      success: cb
+	    });
 	  }
 	};
 
@@ -34732,7 +34740,7 @@
 	  },
 
 	  signup: function signup(loginData) {
-	    SessionApiUtil.create(loginData, this.receiveCurrentUser);
+	    SessionApiUtil.signup(loginData, this.receiveCurrentUser);
 	  },
 
 	  login: function login(loginData) {
@@ -34765,7 +34773,6 @@
 	  },
 
 	  removeCurrentUser: function removeCurrentUser() {
-	    console.log("user has been destroyed");
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.LOGOUT
 	    });

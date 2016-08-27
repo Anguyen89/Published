@@ -34,6 +34,15 @@ module.exports = {
       type: "DELETE",
       success: cb
     })
+  },
+
+  signup(user, cb){
+    $.ajax({
+      url: "api/users",
+      type: "POST",
+      data: {user: user},
+      success: cb
+    })
   }
 
 }
