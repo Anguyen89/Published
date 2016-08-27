@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 20160827203623) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "title",           null: false
-    t.text     "desctiption"
     t.integer  "user_id",         null: false
     t.string   "cover_photo_url"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.text     "description"
   end
 
   add_index "albums", ["user_id"], name: "index_albums_on_user_id", using: :btree
