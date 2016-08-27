@@ -9,13 +9,13 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
+var Modal = require("react-modal");
 
 
 //Components
 var App = require('./app.jsx');
 
-// window.ImageActions = require('./actions/image_actions');
-// window.ImageStore = require('./stores/image_store');
+
 
 
 
@@ -27,6 +27,8 @@ var routes = (
 );
 
 
-document.addEventListener("DOMContentLoaded", function(){
-  ReactDOM.render(routes, document.getElementById('root'));
+document.addEventListener("DOMContentLoaded", function() {
+  Modal.setAppElement(document.body);
+  var root = document.getElementById("root");
+  ReactDOM.render(routes, root);
 });

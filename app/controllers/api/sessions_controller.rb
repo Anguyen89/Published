@@ -6,7 +6,7 @@ class Api::SessionsController < ApplicationController
       params[:user][:password]
     )
 		if @user
-			login(@user)
+			login!(@user)
 			render "api/users/show"
 		else
 			@errors = ['invalid login credentials']
@@ -17,7 +17,7 @@ class Api::SessionsController < ApplicationController
 	def destroy
 		@user = current_user
 		if @user
-			logout
+			logout!
 			render "api/users/show"
 		else
 			@errors = ['no one logged in']

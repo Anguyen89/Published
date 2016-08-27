@@ -2,49 +2,63 @@
 
 var AppDispatcher = require('../dispatcher/dispatcher');
 var SessionConstants = require('../constants/session_constants');
-var SessionApiUtil = require('../utils/session_api_util');
-var ErrorActions = require('./error_actions');
-var hashHistory = require('react-router').hashHistory;
+var SessionApiUtil = require('../utils/api_util');
+var UserConstants = require('../constants/user_constants');
+var ErrorConstants = require('../constants/error_constants');
 
 var SessionActions = {
 
-  signUp(formData){
-    SessionApiUtil.signUp(
-      formData,
-      SessionActions.receiveCurrentUser,
-      ErrorActions.setErrors);
-  },
+	fetchCurrentUser: function() {
+    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser);
+	},
 
-  logIn(formData){
-    SessionApiUtil.logIn(
-      formData,
-      SessionActions.receiveCurrentUser,
-      ErrorActions.setErrors);
-  },
+	signup: function(loginData) {
+		SessionApiUtil.create(loginData, this.receiveCurrentUser);
+	},
 
-  logOut() {
-    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
-  },
+	login: function(loginData) {
+		SessionApiUtil.login(loginData, this.receiveCurrentUser);
+	},
 
-  fetchCurrentUser(complete){
-    SessionApiUtil.fetchCurrentUser(
-      SessionActions.receiveCurrentUser, complete);
-  },
+	logout: function() {
+		SessionApiUtil.logout(this.remvoveCurrentUser);
+	},
 
-  receiveCurrentUser(currentUser) {
+	fetchUserProfile: function(id) {
+		SessionApiUtil.fetchUserProfile(id, this.receiveUserProfile);
+	},
+
+	editUserProfile: function(userData) {
+		SessionApiUtil.editUserProfile(userData);
+	},
+  receiveCurrentUser: function(user){
     AppDispatcher.dispatch({
-      actionType: SessionConstants.LOGIN,
-      currentUser: currentUser
+      actionType: UserConstants.LOGIN,
+      user: user
     });
   },
 
-  removeCurrentUser() {
+  handleError: function(error) {
     AppDispatcher.dispatch({
-      actionType: SessionConstants.LOGOUT
+      actionType: ErrorConstants.ERROR,
+      errors: error.responseJSON.errors
     });
-    hashHistory.push("/login");
+  },
+
+  removeCurrentUser: function(){
+    AppDispatcher.dispatch({
+      actionType: UserConstants.LOGOUT,
+    });
+  },
+
+  receiveUserProfile: function(user) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.RECEIVE_USER,
+      user: user
+    });
   }
-
 };
+
+
 
 module.exports = SessionActions;

@@ -27,7 +27,7 @@ var LoginForm = React.createClass({
 			email: this.state.email,
 			password: this.state.password
 		};
-		UserClientActions.login(loginData);
+		SessionActions.login(loginData);
 		if (SessionStore.currentUser()) {
 			this.setState({
 				modalOpen: false,
@@ -38,12 +38,12 @@ var LoginForm = React.createClass({
 	},
 
 	guestLogin: function(e) {
-		UserClientActions.login({ email: "guest@example.com", password: "password"});
+		SessionActions.login({ email: "guest@example.com", password: "password"});
 	},
 
 	logout: function(e){
 		e.preventDefault();
-		UserClientActions.logout();
+		SessionActions.logout();
 	},
 
 	changeEmail: function(e) {

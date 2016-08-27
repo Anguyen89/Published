@@ -2,7 +2,7 @@ var React = require('react');
 var SessionStore = require('../../stores/session_store');
 var ErrorStore = require("../../stores/error_store");
 var ErrorActions = require('../../actions/error_actions');
-var UserClientActions = require('../../actions/user_client_actions');
+var SessionActions = require('../../actions/session_actions');
 var Modal = require("react-modal");
 
 var SignUpForm = React.createClass({
@@ -32,7 +32,7 @@ var SignUpForm = React.createClass({
       email: this.state.email,
 			password: this.state.password
 		};
-		UserClientActions.signup(loginData);
+		SessionActions.signup(loginData);
     if (SessionStore.currentUser()) {
 			this.setState({
 				modalOpen: false,
