@@ -27103,7 +27103,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var NavBar = __webpack_require__(239);
+	var NavBar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./navbar\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	var ImageCoursel = __webpack_require__(248);
 	// var Upload = require("./components/upload");
 
@@ -27127,89 +27127,8 @@
 	module.exports = App;
 
 /***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var Upload = __webpack_require__(240);
-	var SessionStore = __webpack_require__(267);
-	var ErrorStore = __webpack_require__(268);
-
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	  getInitialState: function getInitialState() {
-	    return {
-	      currentUser: SessionStore.currentUser(),
-	      errors: ErrorStore.all()
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.sessionStoreListener = SessionStore.addListener(this.onChange);
-	    this.errorStoreListener = ErrorStore.addListener(this.onErrorChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.sessionStoreListener.remove();
-	    this.errorStoreListener.remove();
-	  },
-	  onChange: function onChange() {
-	    this.setState({ currentUser: SessionStore.currentUser() });
-	  },
-	  onErrorChange: function onErrorChange() {
-	    this.setState({ errors: ErrorStore.all() });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'nav-container' },
-	      React.createElement(
-	        'a',
-	        { className: 'home-button', onClick: this.goToHome },
-	        'Published'
-	      ),
-	      React.createElement(Upload, null)
-	    );
-	  }
-	});
-
-/***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var ImageActions = __webpack_require__(241);
-
-	var Upload = React.createClass({
-	  displayName: 'Upload',
-
-	  upload: function upload(e) {
-	    e.preventDefault();
-
-	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
-	      if (error, images) {
-	        var picture = { image_url: images[0].url };
-	        ImageActions.createPost(picture);
-	      }
-	    });
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'a',
-	      {
-	        onClick: this.upload,
-	        className: 'upload-icon' },
-	      'Upload'
-	    );
-	  }
-	});
-
-	module.exports = Upload;
-
-/***/ },
+/* 239 */,
+/* 240 */,
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34125,117 +34044,6 @@
 
 	module.exports = FluxMixinLegacy;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Dispatcher = __webpack_require__(243);
-	var Store = __webpack_require__(250).Store;
-	var UserConstants = __webpack_require__(269);
-
-	var SessionStore = new Store(Dispatcher);
-
-	var _currentUser;
-
-	SessionStore.currentUser = function () {
-	  return _currentUser;
-	};
-
-	var addCurrentUser = function addCurrentUser(user) {
-	  _currentUser = undefined;
-	  _currentUser = user;
-	  SessionStore.__emitChange();
-	};
-
-	var removeCurrentUser = function removeCurrentUser() {
-	  _currentUser = undefined;
-	  SessionStore.__emitChange();
-	};
-
-	SessionStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case UserConstants.LOGIN:
-	      addCurrentUser(payload.user);
-	      break;
-	    case UserConstants.LOGOUT:
-	      removeCurrentUser();
-	      break;
-	  }
-	};
-
-	module.exports = SessionStore;
-
-/***/ },
-/* 268 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Dispatcher = __webpack_require__(243);
-	var Store = __webpack_require__(250).Store;
-	var ErrorConstants = __webpack_require__(270);
-
-	var ErrorStore = new Store(Dispatcher);
-
-	var _errors = [];
-
-	ErrorStore.all = function () {
-	  return _errors.slice();
-	};
-
-	var resetErrors = function resetErrors(errors) {
-	  _errors = [];
-	  _errors = errors;
-	  ErrorStore.__emitChange();
-	};
-
-	var removeErrors = function removeErrors() {
-	  _errors = [];
-	  ErrorStore.__emitChange();
-	};
-
-	ErrorStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case ErrorConstants.ERROR:
-	      resetErrors(payload.errors);
-	      break;
-	    case ErrorConstants.REMOVE_ERRORS:
-	      removeErrors();
-	      break;
-	  }
-	};
-
-	module.exports = ErrorStore;
-
-/***/ },
-/* 269 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var UserConstants = {
-	  LOGIN: "LOGIN",
-	  LOGOUT: "LOGOUT",
-	  RECEIVE_USER: "RECEIVE_USER"
-	};
-
-	module.exports = UserConstants;
-
-/***/ },
-/* 270 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var ErrorConstants = {
-	  ERROR: "ERROR",
-	  REMOVE_ERRORS: "REMOVE_ERRORS"
-	};
-
-	module.exports = ErrorConstants;
 
 /***/ }
 /******/ ]);

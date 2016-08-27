@@ -33,12 +33,12 @@
 }
 
 
-.upload-icon {
-  /*width: 20px;
-  height: 20px;*/
+/*.upload-icon {
+  width: 20px;
+  height: 20px;
   font-size: 18px;
 
-}
+}*/
 
 .nav-container:first-child {
   font-family: "Permanent Marker";
@@ -48,6 +48,18 @@
 	font-variant: normal;
 	font-weight: 500;
 	line-height: 26.4px;
+}
+
+.nav-container ul{
+
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 15px;
+}
+
+.nav-container ul li {
+  font-family: "century gothic";
+  padding: 10px;
 }
 
 .image-carousel-container {
