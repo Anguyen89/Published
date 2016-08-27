@@ -21,7 +21,7 @@ var SessionActions = {
 	},
 
 	logout: function() {
-		SessionApiUtil.logout(this.remvoveCurrentUser);
+		SessionApiUtil.logout(this.removeCurrentUser);
 	},
 
 	fetchUserProfile: function(id) {
@@ -46,6 +46,7 @@ var SessionActions = {
   },
 
   removeCurrentUser: function(){
+    console.log("user has been destroyed");
     AppDispatcher.dispatch({
       actionType: UserConstants.LOGOUT,
     });

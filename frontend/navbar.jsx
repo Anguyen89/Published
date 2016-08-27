@@ -35,9 +35,9 @@ module.exports = React.createClass({
     this.setState({ errors: ErrorStore.all()});
   },
 
-  // handleLogout(){
-  //   SessionActions.logout();
-  // },
+  handleLogout(){
+    SessionActions.logout();
+  },
 
   render(){
     var navContent;

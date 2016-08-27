@@ -11,6 +11,8 @@ var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
 var Modal = require("react-modal");
 
+window.SessionStore = require('./stores/session_store');
+
 
 //Components
 var App = require('./app.jsx');

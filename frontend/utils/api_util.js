@@ -28,10 +28,10 @@ module.exports = {
     })
   },
 
-  logout(user, cb){
+  logout(cb){
     $.ajax({
       url: "api/session",
-      type: "DELETE"
+      type: "DELETE",
       success: cb
     })
   }

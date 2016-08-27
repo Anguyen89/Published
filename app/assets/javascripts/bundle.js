@@ -56,6 +56,8 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var Modal = __webpack_require__(276);
 
+	window.SessionStore = __webpack_require__(267);
+
 	//Components
 	var App = __webpack_require__(238);
 
@@ -27161,12 +27163,9 @@
 	  onErrorChange: function onErrorChange() {
 	    this.setState({ errors: ErrorStore.all() });
 	  },
-
-
-	  // handleLogout(){
-	  //   SessionActions.logout();
-	  // },
-
+	  handleLogout: function handleLogout() {
+	    SessionActions.logout();
+	  },
 	  render: function render() {
 	    var navContent;
 	    if (this.state.currentUser) {
@@ -27268,7 +27267,7 @@
 
 	'use strict';
 
-	var ApiUtil = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../utils/api_util\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ApiUtil = __webpack_require__(242);
 	var AppDispatcher = __webpack_require__(243);
 	var ImageConstants = __webpack_require__(247);
 
@@ -27298,7 +27297,45 @@
 	};
 
 /***/ },
-/* 242 */,
+/* 242 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  fetchImages: function fetchImages(cb) {
+	    $.ajax({
+	      url: "api/images",
+	      type: "GET",
+	      success: cb
+	    });
+	  },
+	  createPost: function createPost(image, cb) {
+	    $.ajax({
+	      url: "api/images",
+	      type: "POST",
+	      data: { image: image },
+	      success: cb
+	    });
+	  },
+	  login: function login(user, cb) {
+	    $.ajax({
+	      url: "api/session",
+	      type: "POST",
+	      data: { user: user },
+	      success: cb
+	    });
+	  },
+	  logout: function logout(cb) {
+	    $.ajax({
+	      url: "api/session",
+	      type: "DELETE",
+	      success: cb
+	    });
+	  }
+	};
+
+/***/ },
 /* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34684,7 +34721,7 @@
 
 	var AppDispatcher = __webpack_require__(243);
 	var SessionConstants = __webpack_require__(274);
-	var SessionApiUtil = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../utils/api_util\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var SessionApiUtil = __webpack_require__(242);
 	var UserConstants = __webpack_require__(269);
 	var ErrorConstants = __webpack_require__(270);
 
@@ -34703,7 +34740,7 @@
 	  },
 
 	  logout: function logout() {
-	    SessionApiUtil.logout(this.remvoveCurrentUser);
+	    SessionApiUtil.logout(this.removeCurrentUser);
 	  },
 
 	  fetchUserProfile: function fetchUserProfile(id) {
@@ -34728,6 +34765,7 @@
 	  },
 
 	  removeCurrentUser: function removeCurrentUser() {
+	    console.log("user has been destroyed");
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.LOGOUT
 	    });
