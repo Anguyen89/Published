@@ -27103,7 +27103,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var NavBar = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./navbar\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var NavBar = __webpack_require__(239);
 	var ImageCoursel = __webpack_require__(248);
 	// var Upload = require("./components/upload");
 
@@ -27127,8 +27127,143 @@
 	module.exports = App;
 
 /***/ },
-/* 239 */,
-/* 240 */,
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Upload = __webpack_require__(240);
+	var SessionStore = __webpack_require__(267);
+	var SessionActions = __webpack_require__(273);
+	var ErrorStore = __webpack_require__(268);
+	var Login = __webpack_require__(271);
+	var SignUp = __webpack_require__(272);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	  getInitialState: function getInitialState() {
+	    return {
+	      currentUser: SessionStore.currentUser(),
+	      errors: ErrorStore.all()
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.sessionStoreListener = SessionStore.addListener(this.onChange);
+	    this.errorStoreListener = ErrorStore.addListener(this.onErrorChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionStoreListener.remove();
+	    this.errorStoreListener.remove();
+	  },
+	  onChange: function onChange() {
+	    this.setState({ currentUser: SessionStore.currentUser() });
+	  },
+	  onErrorChange: function onErrorChange() {
+	    this.setState({ errors: ErrorStore.all() });
+	  },
+
+
+	  // handleLogout(){
+	  //   SessionActions.logout();
+	  // },
+
+	  render: function render() {
+	    var navContent;
+	    if (this.state.currentUser) {
+	      navContent = React.createElement(
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(Upload, null)
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { className: 'nav-logout', onClick: this.handleLogout },
+	            'Logout'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { className: 'user-profile-button', onClick: this.redirectToProfile },
+	            'You'
+	          )
+	        )
+	      );
+	    } else {
+	      navContent = React.createElement(
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(Login, null)
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(SignUp, null)
+	        )
+	      );
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'nav-container' },
+	      React.createElement(
+	        'a',
+	        { className: 'home-button', onClick: this.goToHome },
+	        'Published'
+	      ),
+	      navContent
+	    );
+	  }
+	});
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ImageActions = __webpack_require__(241);
+
+	var Upload = React.createClass({
+	  displayName: 'Upload',
+
+	  upload: function upload(e) {
+	    e.preventDefault();
+
+	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
+	      if (error, images) {
+	        var picture = { image_url: images[0].url };
+	        ImageActions.createPost(picture);
+	      }
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'a',
+	      {
+	        onClick: this.upload,
+	        className: 'upload-icon' },
+	      'Upload'
+	    );
+	  }
+	});
+
+	module.exports = Upload;
+
+/***/ },
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34044,6 +34179,599 @@
 
 	module.exports = FluxMixinLegacy;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Dispatcher = __webpack_require__(243);
+	var Store = __webpack_require__(250).Store;
+	var UserConstants = __webpack_require__(269);
+
+	var SessionStore = new Store(Dispatcher);
+
+	var _currentUser;
+
+	SessionStore.currentUser = function () {
+	  return _currentUser;
+	};
+
+	var addCurrentUser = function addCurrentUser(user) {
+	  _currentUser = undefined;
+	  _currentUser = user;
+	  SessionStore.__emitChange();
+	};
+
+	var removeCurrentUser = function removeCurrentUser() {
+	  _currentUser = undefined;
+	  SessionStore.__emitChange();
+	};
+
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.LOGIN:
+	      addCurrentUser(payload.user);
+	      break;
+	    case UserConstants.LOGOUT:
+	      removeCurrentUser();
+	      break;
+	  }
+	};
+
+	module.exports = SessionStore;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Dispatcher = __webpack_require__(243);
+	var Store = __webpack_require__(250).Store;
+	var ErrorConstants = __webpack_require__(270);
+
+	var ErrorStore = new Store(Dispatcher);
+
+	var _errors = [];
+
+	ErrorStore.all = function () {
+	  return _errors.slice();
+	};
+
+	var resetErrors = function resetErrors(errors) {
+	  _errors = [];
+	  _errors = errors;
+	  ErrorStore.__emitChange();
+	};
+
+	var removeErrors = function removeErrors() {
+	  _errors = [];
+	  ErrorStore.__emitChange();
+	};
+
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.ERROR:
+	      resetErrors(payload.errors);
+	      break;
+	    case ErrorConstants.REMOVE_ERRORS:
+	      removeErrors();
+	      break;
+	  }
+	};
+
+	module.exports = ErrorStore;
+
+/***/ },
+/* 269 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var UserConstants = {
+	  LOGIN: "LOGIN",
+	  LOGOUT: "LOGOUT",
+	  RECEIVE_USER: "RECEIVE_USER"
+	};
+
+	module.exports = UserConstants;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var ErrorConstants = {
+	  ERROR: "ERROR",
+	  REMOVE_ERRORS: "REMOVE_ERRORS"
+	};
+
+	module.exports = ErrorConstants;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Modal = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-modal\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var SessionStore = __webpack_require__(267),
+	    ErrorStore = __webpack_require__(268);
+	var SessionActions = __webpack_require__(273);
+	var ErrorActions = __webpack_require__(275);
+
+	var LoginForm = React.createClass({
+		displayName: 'LoginForm',
+
+
+		getInitialState: function getInitialState() {
+			return { modalOpen: false, email: "", password: "" };
+		},
+
+		closeModal: function closeModal() {
+			this.setState({ modalOpen: false });
+		},
+
+		openModal: function openModal() {
+			ErrorActions.removeErrors();
+			this.setState({ modalOpen: true });
+		},
+
+		handleSubmit: function handleSubmit(e) {
+			e.preventDefault();
+			var loginData = {
+				email: this.state.email,
+				password: this.state.password
+			};
+			UserClientActions.login(loginData);
+			if (SessionStore.currentUser()) {
+				this.setState({
+					modalOpen: false,
+					email: "",
+					password: ""
+				});
+			}
+		},
+
+		guestLogin: function guestLogin(e) {
+			UserClientActions.login({ email: "guest@example.com", password: "password" });
+		},
+
+		logout: function logout(e) {
+			e.preventDefault();
+			UserClientActions.logout();
+		},
+
+		changeEmail: function changeEmail(e) {
+			var newEmail = e.target.value;
+			this.setState({ email: newEmail });
+		},
+
+		changePassword: function changePassword(e) {
+			var newPassword = e.target.value;
+			this.setState({ password: newPassword });
+		},
+
+		render: function render() {
+			var errors;
+			if (this.props.errors) {
+				if (this.props.errors.length > 0) {
+					errors = this.props.errors.map(function (error, index) {
+						return React.createElement(
+							'li',
+							{ key: index },
+							error
+						);
+					});
+				}
+			}
+
+			var style = {
+				overlay: {
+					position: 'fixed',
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					backgroundColor: 'rgba(255, 255, 255, 0.30)',
+					zIndex: 1000
+				},
+				content: {
+					position: 'fixed',
+					top: '125px',
+					margin: '0 auto',
+					border: '1px solid #ccc',
+					padding: '20px',
+					zIndex: 1001,
+					width: '30%',
+					maxWidth: '500px',
+					height: '420px'
+				}
+			};
+
+			return React.createElement(
+				'div',
+				{ id: 'login-form' },
+				React.createElement(
+					'a',
+					{ id: 'nav-session', onClick: this.openModal },
+					'SIGN IN'
+				),
+				React.createElement(
+					Modal,
+					{
+						style: style,
+						isOpen: this.state.modalOpen,
+						onRequestClose: this.closeModal },
+					React.createElement(
+						'div',
+						{ className: 'signup-form' },
+						React.createElement(
+							'h1',
+							{ className: 'signup-header' },
+							'SIGN IN'
+						),
+						React.createElement(
+							'form',
+							{ className: 'form', onSubmit: this.handleSubmit },
+							React.createElement(
+								'ul',
+								{ className: 'errors' },
+								errors
+							),
+							React.createElement(
+								'div',
+								{ className: 'field name-box' },
+								React.createElement('input', {
+									className: 'signup-input',
+									type: 'text',
+									value: this.state.email,
+									onChange: this.changeEmail }),
+								React.createElement(
+									'label',
+									null,
+									'Email'
+								),
+								React.createElement(
+									'span',
+									{ className: 'ss-icon' },
+									'check'
+								)
+							),
+							React.createElement('br', null),
+							React.createElement(
+								'div',
+								{ className: 'field email-box' },
+								React.createElement('input', {
+									className: 'signup-input',
+									type: 'password',
+									value: this.state.password,
+									onChange: this.changePassword }),
+								React.createElement(
+									'label',
+									null,
+									'Password'
+								),
+								React.createElement(
+									'span',
+									{ className: 'ss-icon' },
+									'check'
+								)
+							),
+							React.createElement('br', null),
+							React.createElement(
+								'div',
+								{ className: 'submitBox' },
+								React.createElement('input', {
+									className: 'signup-button',
+									type: 'submit', value: 'Log In' }),
+								React.createElement('br', null),
+								React.createElement('br', null),
+								React.createElement(
+									'button',
+									{ className: 'guest-button',
+										onClick: this.guestLogin,
+										type: 'Reset' },
+									'Guest Login'
+								)
+							)
+						)
+					)
+				)
+			);
+		}
+	});
+
+	module.exports = LoginForm;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(267);
+	var ErrorStore = __webpack_require__(268);
+	var ErrorActions = __webpack_require__(275);
+	var UserClientActions = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../actions/user_client_actions\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var Modal = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-modal\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var SignUpForm = React.createClass({
+		displayName: 'SignUpForm',
+
+
+		getInitialState: function getInitialState() {
+			return {
+				modalOpen: false,
+				name: "",
+				email: "",
+				password: ""
+			};
+		},
+
+		closeModal: function closeModal() {
+			this.setState({ modalOpen: false });
+		},
+
+		openModal: function openModal() {
+			ErrorActions.removeErrors();
+			this.setState({ modalOpen: true });
+		},
+
+		handleSubmit: function handleSubmit(e) {
+			e.preventDefault();
+			var loginData = {
+				name: this.state.name,
+				email: this.state.email,
+				password: this.state.password
+			};
+			UserClientActions.signup(loginData);
+			if (SessionStore.currentUser()) {
+				this.setState({
+					modalOpen: false,
+					name: "",
+					email: "",
+					password: ""
+				});
+			}
+		},
+
+		changeName: function changeName(e) {
+			var newName = e.target.value;
+			this.setState({ name: newName });
+		},
+
+		changeEmail: function changeEmail(e) {
+			var newEmail = e.target.value;
+			this.setState({ email: newEmail });
+		},
+
+		changePassword: function changePassword(e) {
+			var newPassword = e.target.value;
+			this.setState({ password: newPassword });
+		},
+
+		render: function render() {
+			var errors;
+			if (this.props.errors) {
+				if (this.props.errors.length > 0) {
+					errors = this.props.errors.map(function (error, index) {
+						return React.createElement(
+							'li',
+							{ key: index },
+							error
+						);
+					});
+				}
+			}
+
+			var style = {
+				overlay: {
+					position: 'fixed',
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					backgroundColor: 'rgba(255, 255, 255, 0.30)',
+					zIndex: 1000
+
+				},
+				content: {
+					position: 'fixed',
+					top: '125px',
+					margin: '0 auto',
+					border: '1px solid #ccc',
+					padding: '20px',
+					zIndex: 1001,
+					width: '30%',
+					maxWidth: '500px',
+					height: '480px'
+				}
+			};
+
+			return React.createElement(
+				'div',
+				{ className: 'signup' },
+				React.createElement(
+					'a',
+					{ onClick: this.openModal },
+					'SIGN UP'
+				),
+				React.createElement(
+					Modal,
+					{
+						isOpen: this.state.modalOpen,
+						onRequestClose: this.closeModal,
+						onAfterOpen: this.openModal,
+						style: style },
+					React.createElement(
+						'div',
+						{ className: 'signup-form' },
+						React.createElement(
+							'h1',
+							{ className: 'signup-header' },
+							'SIGN UP'
+						),
+						React.createElement(
+							'form',
+							{ className: 'form', onSubmit: this.handleSubmit },
+							React.createElement(
+								'ul',
+								{ className: 'errors' },
+								errors
+							),
+							React.createElement(
+								'div',
+								{ className: 'field name-box' },
+								React.createElement('input', {
+									className: 'signup-input',
+									type: 'text',
+									value: this.state.name,
+									onChange: this.changeName }),
+								React.createElement(
+									'label',
+									null,
+									'Name'
+								),
+								React.createElement(
+									'span',
+									{ className: 'ss-icon' },
+									'check'
+								)
+							),
+							React.createElement('br', null),
+							React.createElement(
+								'div',
+								{ className: 'field email-box' },
+								React.createElement('input', {
+									className: 'signup-input',
+									type: 'text',
+									value: this.state.email,
+									onChange: this.changeEmail }),
+								React.createElement(
+									'label',
+									null,
+									'Email'
+								),
+								React.createElement(
+									'span',
+									{ className: 'ss-icon' },
+									'check'
+								)
+							),
+							React.createElement('br', null),
+							React.createElement(
+								'div',
+								{ className: 'field email-box' },
+								React.createElement('input', {
+									className: 'signup-input',
+									type: 'password',
+									value: this.state.password,
+									onChange: this.changePassword }),
+								React.createElement(
+									'label',
+									null,
+									'Password'
+								),
+								React.createElement(
+									'span',
+									{ className: 'ss-icon' },
+									'check'
+								)
+							),
+							React.createElement('br', null),
+							React.createElement(
+								'div',
+								{ className: 'submitBox' },
+								React.createElement('input', { className: 'signup-button', type: 'submit', value: 'Sign Up' })
+							)
+						)
+					)
+				)
+			);
+		}
+	});
+
+	module.exports = SignUpForm;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var AppDispatcher = __webpack_require__(243);
+	var SessionConstants = __webpack_require__(274);
+	var SessionApiUtil = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../utils/session_api_util\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ErrorActions = __webpack_require__(275);
+	var hashHistory = __webpack_require__(175).hashHistory;
+
+	var SessionActions = {
+	  signUp: function signUp(formData) {
+	    SessionApiUtil.signUp(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
+	  },
+	  logIn: function logIn(formData) {
+	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
+	  },
+	  logOut: function logOut() {
+	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+	  },
+	  fetchCurrentUser: function fetchCurrentUser(complete) {
+	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
+	  },
+	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.LOGIN,
+	      currentUser: currentUser
+	    });
+	  },
+	  removeCurrentUser: function removeCurrentUser() {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.LOGOUT
+	    });
+	    hashHistory.push("/login");
+	  }
+	};
+
+	module.exports = SessionActions;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var SessionConstants = {
+		LOGIN: "LOGIN",
+		LOGOUT: "LOGOUT"
+	};
+
+	module.exports = SessionConstants;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var ErrorConstants = __webpack_require__(270);
+	var Dispatcher = __webpack_require__(243);
+
+	var ErrorActions = {
+	  removeErrors: function removeErrors() {
+	    Dispatcher.dispatch({
+	      actionType: ErrorConstants.REMOVE_ERRORS
+	    });
+	  }
+	};
+
+	module.exports = ErrorActions;
 
 /***/ }
 /******/ ]);

@@ -3,6 +3,8 @@ var Upload = require("./components/upload");
 var SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
 var ErrorStore = require('./stores/error_store');
+var Login = require('./components/forms/login');
+var SignUp = require('./components/forms/signup');
 
 
 
@@ -33,9 +35,9 @@ module.exports = React.createClass({
     this.setState({ errors: ErrorStore.all()});
   },
 
-  handleLogout(){
-    SessionActions.logout();
-  }
+  // handleLogout(){
+  //   SessionActions.logout();
+  // },
 
   render(){
     var navContent;
