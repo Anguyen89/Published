@@ -25,9 +25,9 @@ module.exports = React.createClass({
     this.setState({images: ImageStore.all()})
   },
 
-  nextImage(){
-    this.forceUpdate();
-  },
+  // nextImage(){
+  //   this.forceUpdate();
+  // },
 
   render(){
     var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
@@ -35,9 +35,7 @@ module.exports = React.createClass({
 
     return (
       <div className="image-carousel-container">
-        <i onClick={this.nextImage} className="fa fa-arrow-left" aria-hidden="true"/>
         <img className="coursel-image" src={image}/>
-        <i  onClick={this.nextImage} className="fa fa-arrow-right" aria-hidden="true"/>
       </div>
     )
   }

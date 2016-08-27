@@ -27104,7 +27104,7 @@
 
 	var React = __webpack_require__(1);
 	var NavBar = __webpack_require__(239);
-	var ImageCoursel = __webpack_require__(241);
+	var ImageCoursel = __webpack_require__(248);
 	// var Upload = require("./components/upload");
 
 
@@ -27163,7 +27163,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ImageActions = __webpack_require__(242);
+	var ImageActions = __webpack_require__(241);
 
 	var Upload = React.createClass({
 	  displayName: 'Upload',
@@ -27194,51 +27194,9 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var ImageActions = __webpack_require__(242);
-	var ImageStore = __webpack_require__(249);
-
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	  getInitialState: function getInitialState() {
-	    return { images: [] };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ImageStoreListener = ImageStore.addListener(this._onChange);
-	    ImageActions.fetchImages();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ImageStoreListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({ images: ImageStore.all() });
-	  },
-	  nextImage: function nextImage() {
-	    this.forceUpdate();
-	  },
-	  render: function render() {
-	    var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
-	    var image = this.state.images[randomNumber];
-
-	    return React.createElement(
-	      'div',
-	      { className: 'image-carousel-container' },
-	      React.createElement('i', { onClick: this.nextImage, className: 'fa fa-arrow-left', 'aria-hidden': 'true' }),
-	      React.createElement('img', { className: 'coursel-image', src: image }),
-	      React.createElement('i', { onClick: this.nextImage, className: 'fa fa-arrow-right', 'aria-hidden': 'true' })
-	    );
-	  }
-	});
-
-/***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var ApiUtil = __webpack_require__(243);
-	var AppDispatcher = __webpack_require__(244);
-	var ImageConstants = __webpack_require__(248);
+	var ApiUtil = __webpack_require__(242);
+	var AppDispatcher = __webpack_require__(243);
+	var ImageConstants = __webpack_require__(247);
 
 	module.exports = {
 
@@ -27266,7 +27224,7 @@
 	};
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27290,18 +27248,18 @@
 	};
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	"use strict";
 
-	var Dispatcher = __webpack_require__(245).Dispatcher;
+	var Dispatcher = __webpack_require__(244).Dispatcher;
 
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 245 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27313,11 +27271,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(246);
+	module.exports.Dispatcher = __webpack_require__(245);
 
 
 /***/ },
-/* 246 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27339,7 +27297,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	var _prefix = 'ID_';
 
@@ -27554,7 +27512,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 247 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27609,7 +27567,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 248 */
+/* 247 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27620,13 +27578,56 @@
 	};
 
 /***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ImageActions = __webpack_require__(241);
+	var ImageStore = __webpack_require__(249);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	  getInitialState: function getInitialState() {
+	    return { images: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ImageStoreListener = ImageStore.addListener(this._onChange);
+	    ImageActions.fetchImages();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ImageStoreListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ images: ImageStore.all() });
+	  },
+
+
+	  // nextImage(){
+	  //   this.forceUpdate();
+	  // },
+
+	  render: function render() {
+	    var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
+	    var image = this.state.images[randomNumber];
+
+	    return React.createElement(
+	      'div',
+	      { className: 'image-carousel-container' },
+	      React.createElement('img', { className: 'coursel-image', src: image })
+	    );
+	  }
+	});
+
+/***/ },
 /* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var AppDispatcher = __webpack_require__(244);
-	var ImageConstants = __webpack_require__(248);
+	var AppDispatcher = __webpack_require__(243);
+	var ImageConstants = __webpack_require__(247);
 
 	var Store = __webpack_require__(250).Store;
 
@@ -27706,7 +27707,7 @@
 
 	var FluxStoreGroup = __webpack_require__(252);
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 	var shallowEqual = __webpack_require__(253);
 
 	var DEFAULT_OPTIONS = {
@@ -27884,7 +27885,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -28025,7 +28026,7 @@
 	var FluxReduceStore = __webpack_require__(255);
 	var Immutable = __webpack_require__(265);
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -28175,7 +28176,7 @@
 	var FluxStore = __webpack_require__(256);
 
 	var abstractMethod = __webpack_require__(264);
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -28281,7 +28282,7 @@
 
 	var EventEmitter = _require.EventEmitter;
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -28988,7 +28989,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -34001,7 +34002,7 @@
 
 	var FluxStoreGroup = __webpack_require__(252);
 
-	var invariant = __webpack_require__(247);
+	var invariant = __webpack_require__(246);
 
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
