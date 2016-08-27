@@ -16,3 +16,16 @@ images = Image.create!([
   {image_url: "https://hd.unsplash.com/photo-1465479423260-c4afc24172c6"},
   {image_url: "https://hd.unsplash.com/photo-1464695110811-dcf3903dc2f4"}
 ])
+
+
+User.create!(
+  name: "Shaghig",
+  email: "shaghig@example.com",
+  password: "password"
+)
+
+User.create!(
+  name: "Guest",
+  email: "guest@example.com",
+  password: "password"
+)
