@@ -36758,12 +36758,13 @@
 	  // },
 
 	  render: function render() {
-	    // var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
-	    // var image = this.state.images[randomNumber];
+	    var images = ["https://hd.unsplash.com/photo-1462524500090-89443873e2b4", "https://hd.unsplash.com/photo-1451188214936-ec16af5ca155", "https://hd.unsplash.com/photo-1468476775582-6bede20f356f", "https://hd.unsplash.com/photo-1468245856972-a0333f3f8293", "https://hd.unsplash.com/photo-1466046690866-98181611563d", "https://hd.unsplash.com/photo-1465284958051-1353268c077d", "https://hd.unsplash.com/photo-1465232377925-cce9a9d87843"];
+	    var randomNumber = Math.floor(Math.random() * images.length - 1) + 1;
+	    var image = images[randomNumber];
 	    return React.createElement(
 	      'div',
 	      { className: 'image-carousel-container' },
-	      React.createElement('img', { className: 'coursel-image', src: 'https://hd.unsplash.com/photo-1434434319959-1f886517e1fe' })
+	      React.createElement('img', { className: 'coursel-image', src: image })
 	    );
 	  }
 	});
