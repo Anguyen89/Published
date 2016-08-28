@@ -1,3 +1,14 @@
 // Place all the styles related to the Api::Images controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.image {
+  padding: 5px;
+}
