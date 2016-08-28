@@ -13,6 +13,7 @@ var ImageFeed = React.createClass({
   componentDidMount(){
     this.ImageStoreListener = ImageStore.addListener(this._onChange);
     ImageActions.fetchImages();
+    this.setState({loaded: true});
   },
 
   componentWillUnmount(){

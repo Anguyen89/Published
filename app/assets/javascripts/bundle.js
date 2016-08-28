@@ -36710,7 +36710,7 @@
 	  render: function render() {
 	    var homeDisplay;
 	    if (this.state.currentUser) {
-	      homeDisplay = React.createElement('div', null);
+	      homeDisplay = React.createElement(ImageFeed, null);
 	    } else {
 	      homeDisplay = React.createElement(ImageCoursel, null);
 	    }
@@ -36737,26 +36737,33 @@
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
-	  getInitialState: function getInitialState() {
-	    return { images: [] };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ImageStoreListener = ImageStore.addListener(this._onChange);
-	    ImageActions.fetchImages();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ImageStoreListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({ images: ImageStore.all() });
-	  },
+
+
+	  // getInitialState(){
+	  //   return { images: []};
+	  // },
+	  //
+	  // componentDidMount(){
+	  //   this.ImageStoreListener = ImageStore.addListener(this._onChange);
+	  //   ImageActions.fetchImages();
+	  // },
+	  //
+	  // componentWillUnmount(){
+	  //   this.ImageStoreListener.remove();
+	  // },
+	  //
+	  // _onChange(){
+	  //   this.setState({images: ImageStore.all()})
+	  //
+	  // },
+
 	  render: function render() {
-	    var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
-	    var image = this.state.images[randomNumber];
+	    // var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
+	    // var image = this.state.images[randomNumber];
 	    return React.createElement(
 	      'div',
 	      { className: 'image-carousel-container' },
-	      React.createElement('img', { className: 'coursel-image', src: image })
+	      React.createElement('img', { className: 'coursel-image', src: 'https://hd.unsplash.com/photo-1434434319959-1f886517e1fe' })
 	    );
 	  }
 	});
@@ -36776,12 +36783,12 @@
 
 	var _images = {};
 
-	//need to see why the object cannot be used outside of this
+	//need to see why the object cannot be used outside of this. Why do
 
 	var resetImages = function resetImages(images) {
 	  _images = {};
 	  images.forEach(function (image) {
-	    _images[image.id] = image.image_url;
+	    _images[image.id] = image;
 	  });
 	};
 
@@ -36837,6 +36844,7 @@
 	  componentDidMount: function componentDidMount() {
 	    this.ImageStoreListener = ImageStore.addListener(this._onChange);
 	    ImageActions.fetchImages();
+	    this.setState({ loaded: true });
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.ImageStoreListener.remove();
@@ -42969,10 +42977,11 @@
 	    var imageUrl = this.props.image.image_url;
 	    var initialUrl = /upload\S*(?:\s\S+)?/.exec(imageUrl);
 	    var endUrl = /(?:\S+\s)?\S*upload/.exec(imageUrl);
-	    console.log(imageUrl);
+	    var url;
 	    if (endUrl) {
-	      return initialUrl[0] + "/c_scale,w_270" + endUrl[0].replace(/upload/, "");
+	      url = endUrl[0] + "/c_scale,w_270" + initialUrl[0].replace(/upload/, "");
 	    }
+	    return url;
 	  },
 
 	  render: function render() {

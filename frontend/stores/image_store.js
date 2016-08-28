@@ -10,12 +10,12 @@ var ImageStore = new Store(AppDispatcher);
 
 var _images = {};
 
-//need to see why the object cannot be used outside of this
+//need to see why the object cannot be used outside of this. Why do
 
 var resetImages = function(images){
   _images = {};
   images.forEach(function(image){
-    _images[image.id] = image.image_url;
+    _images[image.id] = image;
   });
 
 };

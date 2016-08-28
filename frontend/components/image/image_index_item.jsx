@@ -14,10 +14,11 @@ var ImageIndexItem = React.createClass({
     var imageUrl = this.props.image.image_url;
     var initialUrl = /upload\S*(?:\s\S+)?/.exec(imageUrl);
     var endUrl = /(?:\S+\s)?\S*upload/.exec(imageUrl);
-    console.log(imageUrl);
+    var url;
     if (endUrl) {
-      return initialUrl[0] + "/c_scale,w_270" + endUrl[0].replace(/upload/,"");
+      url =  endUrl[0] + "/c_scale,w_270" + initialUrl[0].replace(/upload/,"");
     }
+    return url;
   },
 
   render: function() {

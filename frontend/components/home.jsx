@@ -12,6 +12,7 @@ var Home = React.createClass({
 
   componentDidMount(){
     this.SessionListener = SessionStore.addListener(this.onChange);
+
   },
 
   componentWillUnmount(){
@@ -22,10 +23,11 @@ var Home = React.createClass({
     this.setState({ currentUser: SessionStore.currentUser()});
   },
 
+
   render(){
     var homeDisplay;
     if (this.state.currentUser){
-      homeDisplay = (<div></div>);
+      homeDisplay = (<ImageFeed/>);
     } else {
       homeDisplay = (<ImageCoursel/>);
     }
