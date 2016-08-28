@@ -23,12 +23,12 @@ module.exports = React.createClass({
 
   _onChange(){
     this.setState({images: ImageStore.all()})
+
   },
 
   render(){
     var randomNumber = Math.floor(Math.random() * this.state.images.length - 1) + 1;
     var image = this.state.images[randomNumber];
-
     return (
       <div className="image-carousel-container">
         <img className="coursel-image" src={image}/>

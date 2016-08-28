@@ -12,7 +12,7 @@ var hashHistory = ReactRouter.hashHistory;
 var Modal = require("react-modal");
 
 window.SessionStore = require('./stores/session_store');
-
+window.ImageStore = require('./stores/image_store');
 
 //Components
 var App = require('./components/app.jsx');

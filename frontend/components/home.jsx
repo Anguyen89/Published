@@ -2,6 +2,7 @@ var React = require('react');
 var SessionStore = require('../stores/session_store');
 
 var ImageCoursel = require('./image/image_coursel');
+var ImageFeed = require('./image/image_feed');
 
 var Home = React.createClass({
 
@@ -13,6 +14,10 @@ var Home = React.createClass({
     this.SessionListener = SessionStore.addListener(this.onChange);
   },
 
+  componentWillUnmount(){
+    this.SessionListener.remove();
+  },
+
   onChange(){
     this.setState({ currentUser: SessionStore.currentUser()});
   },
@@ -20,7 +25,7 @@ var Home = React.createClass({
   render(){
     var homeDisplay;
     if (this.state.currentUser){
-      homeDisplay = (<div>Add Discover Component Here</div>);
+      homeDisplay = (<div></div>);
     } else {
       homeDisplay = (<ImageCoursel/>);
     }

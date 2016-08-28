@@ -1,3 +1,5 @@
+
+
 var AppDispatcher = require('../dispatcher/dispatcher');
 var ImageConstants = require('../constants/image_constants');
 
@@ -6,23 +8,33 @@ var Store = require('flux/utils').Store;
 var ImageStore = new Store(AppDispatcher);
 
 
-var _images = [];
+var _images = {};
 
-
+//need to see why the object cannot be used outside of this
 
 var resetImages = function(images){
-  _images = images.map(function(image){
-    return image.image_url;
+  _images = {};
+  images.forEach(function(image){
+    _images[image.id] = image.image_url;
   });
+
 };
 
 var addImage = function(image){
   _images[image.id] = image;
 };
 
-ImageStore.all = function(){
-  return _images;
-},
+ImageStore.all = function() {
+  var images = [];
+  for (var id in _images) {
+    images.push(_images[id]);
+  }
+  return images;
+};
+
+ImageStore.find = function(id) {
+  return _images[id];
+};
 
 
 ImageStore.__onDispatch = function(payload){

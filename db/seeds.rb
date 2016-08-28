@@ -62,27 +62,26 @@ IMAGE_TITLE = [
 ]
 
 ALBUM_IMAGE_URLS = [
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465595735/Girl3_aigtqb.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465595759/Tiger_whvlp9.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465595789/Waves_fulhu0.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596589/Starry_lake_u9sl8y.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596615/Whale_kwgq9v.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596655/Stag_tqpt7k.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596676/Cat2_cf5pcx.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596702/tumblr_mk2oor3uZa1qggs6ao1_500_f76kae.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596727/Bike_feqonw.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596813/tumblr_mrx3axMGaB1rnlb7lo1_r1_400_iikbet.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596840/Aquarium_exgmol.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596968/Mountains_sgbtc6.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596994/Balloons_g7ggzu.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597017/Paris_xtcegp.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597037/Baby_ycxlxj.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597085/PUppy_tfhcmj.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597114/Tiger_2_fblwps.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597144/Forest_ni2gjm.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597214/Puppy2_ewtqdm.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597240/waterfall_pxyxao.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597267/Disneyland2_xzd9wk.png"
+  "https://hd.unsplash.com/photo-1469719847081-4757697d117a",
+  "https://hd.unsplash.com/photo-1467521335787-2f0fc0f0e9a0",
+  "https://hd.unsplash.com/photo-1466837838619-c8f5b8f0c166",
+  "https://hd.unsplash.com/photo-1457365050282-c53d772ef8b2",
+  "https://hd.unsplash.com/photo-1467321638755-7246fd0dc1f3",
+  "https://hd.unsplash.com/photo-1465479423260-c4afc24172c6",
+  "https://hd.unsplash.com/photo-1462524500090-89443873e2b4",
+  "https://hd.unsplash.com/photo-1451188214936-ec16af5ca155",
+  "https://hd.unsplash.com/photo-1468476775582-6bede20f356f",
+  "https://hd.unsplash.com/photo-1468245856972-a0333f3f8293",
+  "https://hd.unsplash.com/photo-1466046690866-98181611563d",
+  "https://hd.unsplash.com/photo-1465284958051-1353268c077d",
+  "https://hd.unsplash.com/photo-1465232377925-cce9a9d87843",
+  "https://hd.unsplash.com/photo-1464740042629-b78a46b310ae",
+  "https://hd.unsplash.com/photo-1464695110811-dcf3903dc2f4",
+  "https://hd.unsplash.com/photo-1451479456262-b94f205059be",
+  "https://hd.unsplash.com/photo-1467348733814-f93fc480bec6",
+  "https://hd.unsplash.com/photo-1467173572719-f14b9fb86e5f",
+  "https://hd.unsplash.com/photo-1466721591366-2d5fba72006d"
+
 ]
 
 ALBUM_IMAGE_TITLES = [
@@ -150,16 +149,16 @@ GUEST_ALBUM_TITLES = [
 ]
 
 TRADITIONAL_URLS = [
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596968/Mountains_sgbtc6.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465596994/Balloons_g7ggzu.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597017/Paris_xtcegp.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597037/Baby_ycxlxj.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597085/PUppy_tfhcmj.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597114/Tiger_2_fblwps.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597144/Forest_ni2gjm.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597214/Puppy2_ewtqdm.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597240/waterfall_pxyxao.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597267/Disneyland2_xzd9wk.png"
+  "https://hd.unsplash.com/photo-1462331940025-496dfbfc7564",
+  "https://hd.unsplash.com/photo-1461360370896-922624d12aa1",
+  "https://hd.unsplash.com/photo-1457144759132-40d119c2f120",
+  "https://hd.unsplash.com/photo-1452473767141-7c6086eacf42",
+  "https://hd.unsplash.com/photo-1434434319959-1f886517e1fe",
+  "https://hd.unsplash.com/photo-1440613905118-99b921706b5c",
+  "https://hd.unsplash.com/photo-1457685373807-8c4d8be4c560",
+  "https://hd.unsplash.com/photo-1432637194732-34cedd856522",
+  "https://hd.unsplash.com/photo-1416169607655-0c2b3ce2e1cc",
+  "https://hd.unsplash.com/photo-1460899960812-f6ee1ecaf117"
 ]
 
 TRADITIONAL_TITLES = [
