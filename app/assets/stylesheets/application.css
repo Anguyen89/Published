@@ -26,18 +26,13 @@
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  width: 100%;
+  width: 1600px;
   padding: 0 100px 0 100px;
   background: black;
+  position: fixed;
+  overflow-y: hidden;
+  z-index: 1;
 }
-
-
-/*.upload-icon {
-  width: 20px;
-  height: 20px;
-  font-size: 18px;
-
-}*/
 
 .nav-container:first-child {
   font-family: "Permanent Marker";
@@ -47,11 +42,12 @@
 	font-variant: normal;
 	font-weight: 500;
 	line-height: 26.4px;
+  margin-left: 50px;
 }
 
 .nav-container ul{
-
   display: flex;
+  margin-right: 100px;
   flex-wrap: nowrap;
   font-size: 15px;
 }
@@ -64,33 +60,17 @@
 .image-carousel-container {
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap;
 
 }
 
 .coursel-image {
-  height: 950px;
+  height: 1000px;
   width: 1650px;
   background-color: transparent;
 }
 
-fa {
-  width: 20px;
-  height: 800px;
-}
 
-i.fa.fa-arrow-right{
-  margin-left: 5px;
-  display: flex;
-  align-items: center;
-}
 
-i.fa.fa-arrow-left {
-  margin-right: 5px;
-  display: flex;
-  align-items: center;
-
-}
 
 .fa:hover {
   background: #D3D3D3;

@@ -59,10 +59,16 @@ IMAGE_TITLE = [
 ]
 
 ALBUM_IMAGE_URLS = [
-  "http://res.cloudinary.com/dkieltxya/image/upload/v1472253025/nyrcwec0wrhu8mjvyuvt.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465595759/Tiger_whvlp9.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465595789/Waves_fulhu0.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596589/Starry_lake_u9sl8y.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597017/Paris_xtcegp.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597037/Baby_ycxlxj.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597085/PUppy_tfhcmj.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597114/Tiger_2_fblwps.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597144/Forest_ni2gjm.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597214/Puppy2_ewtqdm.jpg",
+  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597240/waterfall_pxyxao.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596615/Whale_kwgq9v.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596655/Stag_tqpt7k.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596676/Cat2_cf5pcx.jpg",
@@ -72,13 +78,6 @@ ALBUM_IMAGE_URLS = [
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596840/Aquarium_exgmol.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596968/Mountains_sgbtc6.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465596994/Balloons_g7ggzu.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597017/Paris_xtcegp.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597037/Baby_ycxlxj.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597085/PUppy_tfhcmj.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597114/Tiger_2_fblwps.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597144/Forest_ni2gjm.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597214/Puppy2_ewtqdm.jpg",
-  "https://res.cloudinary.com/kasperkuo/image/upload/v1465597240/waterfall_pxyxao.jpg",
   "https://res.cloudinary.com/kasperkuo/image/upload/v1465597267/Disneyland2_xzd9wk.png"
 ]
 
