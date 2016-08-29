@@ -2,6 +2,7 @@
 var React = require('react');
 var ImageActions = require('../../actions/image_actions');
 var ImageStore = require('../../stores/image_store');
+var Login = require('../forms/login');
 
 
 
@@ -40,7 +41,7 @@ module.exports = React.createClass({
     var image = images[randomNumber];
     return (
       <div className="image-carousel-container">
-        <img className="coursel-image" src={image}/>
+        <img className="coursel-image" src={image} />
       </div>
     )
   }

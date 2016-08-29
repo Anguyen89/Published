@@ -58,6 +58,7 @@
 
 	window.SessionStore = __webpack_require__(258);
 	window.ImageStore = __webpack_require__(296);
+	window.ImageActions = __webpack_require__(284);
 
 	//Components
 	var App = __webpack_require__(281);
@@ -36003,6 +36004,7 @@
 
 	var React = __webpack_require__(1);
 	var ImageActions = __webpack_require__(284);
+	var SessionStore = __webpack_require__(258);
 
 	var Upload = React.createClass({
 	  displayName: 'Upload',
@@ -36012,7 +36014,7 @@
 
 	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
 	      if (error, images) {
-	        var picture = { image_url: images[0].url };
+	        var picture = { image_url: images[0].url, user_id: SessionStore.currentUser().id };
 	        ImageActions.createPost(picture);
 	      }
 	    });
@@ -36054,6 +36056,18 @@
 	    });
 	  },
 
+	  deleteImage: function deleteImage(image) {
+	    ApiUtil.deleteImage(image, this.removeImage);
+	  },
+
+	  removeImage: function removeImage(image) {
+	    console.log('dispatch removal to store');
+	    AppDispatcher.dispatch({
+	      actionType: ImageConstants.DELETE_IMAGE,
+	      image: image
+	    });
+	  },
+
 	  createPost: function createPost(image) {
 	    ApiUtil.createPost(image);
 	  },
@@ -36077,6 +36091,14 @@
 	    $.ajax({
 	      url: "api/images",
 	      type: "GET",
+	      success: cb
+	    });
+	  },
+	  deleteImage: function deleteImage(image, cb) {
+	    console.log("deleting image from util");
+	    $.ajax({
+	      url: "api/images/" + image.id,
+	      type: "DELETE",
 	      success: cb
 	    });
 	  },
@@ -36121,7 +36143,8 @@
 
 	module.exports = {
 	  RECEIVE_IMAGES: "RECEIVE_IMAGES",
-	  RECEIVE_IMAGE: "RECEIVE_IMAGE"
+	  RECEIVE_IMAGE: "RECEIVE_IMAGE",
+	  DELETE_IMAGE: "DELETE_IMAGE"
 	};
 
 /***/ },
@@ -36740,6 +36763,7 @@
 	var React = __webpack_require__(1);
 	var ImageActions = __webpack_require__(284);
 	var ImageStore = __webpack_require__(296);
+	var Login = __webpack_require__(291);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -36783,6 +36807,7 @@
 
 	var AppDispatcher = __webpack_require__(259);
 	var ImageConstants = __webpack_require__(286);
+	var hashHistory = __webpack_require__(175).hashHistory;
 
 	var Store = __webpack_require__(263).Store;
 
@@ -36798,7 +36823,14 @@
 	};
 
 	var addImage = function addImage(image) {
+	  console.log('adding image to store');
 	  _images[image.id] = image;
+	};
+
+	var removeImage = function removeImage(image) {
+	  console.log("removing from store");
+	  delete _images[image.id];
+	  hashHistory.push('/');
 	};
 
 	ImageStore.all = function () {
@@ -36814,6 +36846,7 @@
 	};
 
 	ImageStore.__onDispatch = function (payload) {
+	  console.log("inside the dispatcher");
 	  switch (payload.actionType) {
 	    case ImageConstants.RECEIVE_IMAGES:
 	      resetImages(payload.images);
@@ -36823,6 +36856,9 @@
 	      addImage(payload.image);
 	      this.__emitChange();
 	      break;
+	    case ImageConstants.DELETE_IMAGE:
+	      removeImage(payload.image);
+	      this.__emitChange();
 	  }
 	};
 
@@ -43057,13 +43093,37 @@
 
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(175).hashHistory;
+	var ImageActions = __webpack_require__(284);
 
 	var ImageDetail = React.createClass({
 	  displayName: 'ImageDetail',
 	  rootToHome: function rootToHome() {
 	    hashHistory.push('/');
 	  },
+	  rootToEdit: function rootToEdit() {},
+	  deleteImage: function deleteImage() {
+	    ImageActions.deleteImage(this.props.image);
+	  },
 	  render: function render() {
+	    var editDelete;
+	    if (this.props.user.id === SessionStore.currentUser().id) {
+	      editDelete = React.createElement(
+	        'div',
+	        { className: 'edit-delete' },
+	        React.createElement(
+	          'div',
+	          { onClick: this.rootToEdit },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'div',
+	          { onClick: this.deleteImage },
+	          'Delete'
+	        )
+	      );
+	    } else {
+	      editDelete = React.createElement('div', null);
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'image-detail' },
@@ -43081,6 +43141,11 @@
 	        { className: 'image-author' },
 	        'by: ',
 	        this.props.user.name
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        editDelete
 	      ),
 	      React.createElement(
 	        'a',

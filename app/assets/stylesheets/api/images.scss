@@ -43,6 +43,7 @@
   justify-content: center;
   font-family: "Permanent Marker";
   font-size: 45px;
+  text-align: center;
   width: 400px;
 }
 
@@ -69,4 +70,11 @@
   // border-radius: 2%;
   width: 900px;
   height: 700px;
+}
+
+.edit-delete a {
+  padding: 10px;
+  font-size: 10px;
+  cursor: pointer;
+
 }

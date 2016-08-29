@@ -17,10 +17,16 @@ class Api::ImagesController < ApplicationController
     end
   end
 
+  def destroy
+    @image = Image.find(params[:id])
+    @image.destroy
+    render json: {}
+  end
+
   private
 
   def image_params
-    params.require(:image).permit(:image_url)
+    params.require(:image).permit(:image_url, :user_id)
   end
 
 end

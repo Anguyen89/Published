@@ -2,6 +2,7 @@
 
 var AppDispatcher = require('../dispatcher/dispatcher');
 var ImageConstants = require('../constants/image_constants');
+var hashHistory = require('react-router').hashHistory;
 
 var Store = require('flux/utils').Store;
 
@@ -20,7 +21,14 @@ var resetImages = function(images){
 };
 
 var addImage = function(image){
+  console.log('adding image to store');
   _images[image.id] = image;
+};
+
+var removeImage = function(image){
+  console.log("removing from store");
+  delete _images[image.id];
+  hashHistory.push('/');
 };
 
 ImageStore.all = function() {
@@ -37,6 +45,7 @@ ImageStore.find = function(id) {
 
 
 ImageStore.__onDispatch = function(payload){
+  console.log("inside the dispatcher");
   switch(payload.actionType){
     case ImageConstants.RECEIVE_IMAGES:
       resetImages(payload.images);
@@ -46,6 +55,9 @@ ImageStore.__onDispatch = function(payload){
       addImage(payload.image);
       this.__emitChange();
       break;
+    case ImageConstants.DELETE_IMAGE:
+      removeImage(payload.image);
+      this.__emitChange();
   }
 };
 
