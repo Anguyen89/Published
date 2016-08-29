@@ -62,6 +62,7 @@
 	//Components
 	var App = __webpack_require__(281);
 	var Home = __webpack_require__(294);
+	var ImageShowContainer = __webpack_require__(315);
 
 	var routes = React.createElement(
 	  Router,
@@ -69,7 +70,8 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(IndexRoute, { component: Home })
+	    React.createElement(IndexRoute, { component: Home }),
+	    React.createElement(Route, { path: 'image/:id', component: ImageShowContainer })
 	  )
 	);
 
@@ -42965,15 +42967,12 @@
 
 	var ImageIndexItem = React.createClass({
 	  displayName: 'ImageIndexItem',
-
 	  showImage: function showImage() {
-	    HashHistory.push('/images/' + this.props.image.id);
+	    HashHistory.push('/image/' + this.props.image.id);
 	  },
-
 	  imageLoaded: function imageLoaded() {
 	    this.setState({ imageLoaded: true });
 	  },
-
 	  imageResized: function imageResized() {
 	    var imageUrl = this.props.image.image_url;
 	    var initialUrl = /upload\S*(?:\s\S+)?/.exec(imageUrl);
@@ -42984,7 +42983,6 @@
 	    }
 	    return url;
 	  },
-
 	  render: function render() {
 	    return React.createElement(
 	      'li',
@@ -42992,10 +42990,101 @@
 	      React.createElement('img', { className: 'image_thumbnail', src: this.imageResized() })
 	    );
 	  }
-
 	});
 
 	module.exports = ImageIndexItem;
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var ImageShow = React.createClass({
+	  displayName: "ImageShow",
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "image-show" },
+	      React.createElement("img", { src: this.props.image.image_url })
+	    );
+	  }
+	});
+
+	module.exports = ImageShow;
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ImageStore = __webpack_require__(296);
+	var ImageDetail = __webpack_require__(316);
+	var ImageShow = __webpack_require__(314);
+
+	var ImageShowContainer = React.createClass({
+	  displayName: 'ImageShowContainer',
+	  getInitialState: function getInitialState() {
+	    return { image: {} };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.setState({ image: ImageStore.find(this.props.params.id) });
+	  },
+	  render: function render() {
+	    console.log(this.state.image);
+	    return React.createElement(
+	      'div',
+	      { className: 'image-show-container' },
+	      React.createElement(ImageDetail, { user: this.state.image.user, image: this.state.image }),
+	      React.createElement(ImageShow, { image: this.state.image })
+	    );
+	  }
+	});
+
+	module.exports = ImageShowContainer;
+
+/***/ },
+/* 316 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(175).hashHistory;
+
+	var ImageDetail = React.createClass({
+	  displayName: 'ImageDetail',
+	  rootToHome: function rootToHome() {
+	    hashHistory.push('/');
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'image-detail' },
+	      React.createElement(
+	        'h1',
+	        { className: 'image-title' },
+	        this.props.image.title
+	      ),
+	      React.createElement(
+	        'h3',
+	        { className: 'image-author' },
+	        this.props.user.name
+	      ),
+	      React.createElement(
+	        'a',
+	        { onClick: this.rootToHome, className: 'image-return' },
+	        'return to Home'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = ImageDetail;
 
 /***/ }
 /******/ ]);

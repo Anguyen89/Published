@@ -17,6 +17,7 @@ window.ImageStore = require('./stores/image_store');
 //Components
 var App = require('./components/app.jsx');
 var Home = require('./components/home.jsx');
+var ImageShowContainer = require('./components/image/image_show_container.jsx');
 
 
 
@@ -27,6 +28,7 @@ var routes = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
+      <Route path="image/:id" component={ImageShowContainer}/>
     </Route>
 
   </Router>
