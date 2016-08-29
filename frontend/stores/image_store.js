@@ -26,7 +26,6 @@ var addImage = function(image){
 };
 
 var removeImage = function(image){
-  console.log("removing from store");
   delete _images[image.id];
   hashHistory.push('/');
 };

@@ -21,7 +21,6 @@ module.exports = {
   },
 
   removeImage: function(image){
-        console.log('dispatch removal to store');
     AppDispatcher.dispatch({
       actionType: ImageConstants.DELETE_IMAGE,
       image: image
@@ -29,7 +28,7 @@ module.exports = {
   },
 
   createPost: function(image){
-    ApiUtil.createPost(image);
+    ApiUtil.createPost(image, this.receivePost);
   },
 
   receivePost: function(image){

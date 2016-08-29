@@ -36061,7 +36061,6 @@
 	  },
 
 	  removeImage: function removeImage(image) {
-	    console.log('dispatch removal to store');
 	    AppDispatcher.dispatch({
 	      actionType: ImageConstants.DELETE_IMAGE,
 	      image: image
@@ -36069,7 +36068,7 @@
 	  },
 
 	  createPost: function createPost(image) {
-	    ApiUtil.createPost(image);
+	    ApiUtil.createPost(image, this.receivePost);
 	  },
 
 	  receivePost: function receivePost(image) {
@@ -36828,7 +36827,6 @@
 	};
 
 	var removeImage = function removeImage(image) {
-	  console.log("removing from store");
 	  delete _images[image.id];
 	  hashHistory.push('/');
 	};
