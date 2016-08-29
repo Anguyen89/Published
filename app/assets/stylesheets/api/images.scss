@@ -39,8 +39,11 @@
 }
 
 .image-title {
+  display: flex;
+  justify-content: center;
   font-family: "Permanent Marker";
   font-size: 45px;
+  width: 400px;
 }
 
 .image-author {
@@ -54,7 +57,7 @@
 
 .image-return {
   font-size: 12px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .image-show {

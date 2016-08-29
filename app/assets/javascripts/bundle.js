@@ -35906,6 +35906,7 @@
 	var ErrorStore = __webpack_require__(290);
 	var Login = __webpack_require__(291);
 	var SignUp = __webpack_require__(293);
+	var hashHistory = __webpack_require__(175).hashHistory;
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -35931,6 +35932,9 @@
 	  },
 	  handleLogout: function handleLogout() {
 	    SessionActions.logout();
+	  },
+	  goToHome: function goToHome() {
+	    hashHistory.push('/');
 	  },
 	  render: function render() {
 	    var navContent;
@@ -36785,8 +36789,6 @@
 	var ImageStore = new Store(AppDispatcher);
 
 	var _images = {};
-
-	//need to see why the object cannot be used outside of this. Why do
 
 	var resetImages = function resetImages(images) {
 	  _images = {};
@@ -43066,13 +43068,18 @@
 	      'div',
 	      { className: 'image-detail' },
 	      React.createElement(
-	        'h1',
+	        'div',
 	        { className: 'image-title' },
-	        this.props.image.title
+	        React.createElement(
+	          'div',
+	          null,
+	          this.props.image.title
+	        )
 	      ),
 	      React.createElement(
-	        'h3',
+	        'div',
 	        { className: 'image-author' },
+	        'by: ',
 	        this.props.user.name
 	      ),
 	      React.createElement(

@@ -10,8 +10,10 @@ var ImageDetail = React.createClass({
   render(){
     return(
       <div className="image-detail">
-        <h1 className="image-title">{this.props.image.title}</h1>
-        <h3 className="image-author">{this.props.user.name}</h3>
+        <div className="image-title">
+          <div>{this.props.image.title}</div>
+        </div>
+        <div className="image-author">by: {this.props.user.name}</div>
         <a onClick={this.rootToHome} className="image-return">return to Home</a>
       </div>
     )

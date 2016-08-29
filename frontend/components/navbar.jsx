@@ -5,6 +5,7 @@ var SessionActions = require('../actions/session_actions');
 var ErrorStore = require('../stores/error_store');
 var Login = require('./forms/login');
 var SignUp = require('./forms/signup');
+var hashHistory = require('react-router').hashHistory;
 
 
 
@@ -37,6 +38,10 @@ module.exports = React.createClass({
 
   handleLogout(){
     SessionActions.logout();
+  },
+
+  goToHome(){
+    hashHistory.push('/');
   },
 
   render(){

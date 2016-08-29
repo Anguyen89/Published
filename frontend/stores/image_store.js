@@ -10,7 +10,6 @@ var ImageStore = new Store(AppDispatcher);
 
 var _images = {};
 
-//need to see why the object cannot be used outside of this. Why do
 
 var resetImages = function(images){
   _images = {};
