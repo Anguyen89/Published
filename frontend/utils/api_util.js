@@ -10,8 +10,15 @@ module.exports = {
     })
   },
 
+  fetchImage(id, cb){
+    $.ajax({
+      url: "api/images/" + id,
+      type: "GET",
+      success: cb 
+    })
+  },
+
   deleteImage(image, cb){
-    console.log("deleting image from util");
     $.ajax({
       url: "api/images/" + image.id,
       type: "DELETE",

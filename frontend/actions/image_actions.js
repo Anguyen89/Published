@@ -9,6 +9,17 @@ module.exports = {
     ApiUtil.fetchImages(this.receiveImages);
   },
 
+  fetchImage: function(id){
+    ApiUtil.fetchImage(id,this.receiveImage);
+  },
+
+  receiveImage: function(image){
+    AppDispatcher.dispatch({
+      actionType: ImageConstants.RECEIVE_IMAGE,
+      image: image
+    });
+  },
+
   receiveImages: function(images){
     AppDispatcher.dispatch({
       actionType: ImageConstants.RECEIVE_IMAGES,

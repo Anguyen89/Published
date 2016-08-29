@@ -72,9 +72,45 @@
   height: 700px;
 }
 
-.edit-delete a {
-  padding: 10px;
+.edit-delete {
   font-size: 10px;
-  cursor: pointer;
+  padding: 10px;
+}
 
+.edit-delete a {
+  cursor: pointer;
+}
+
+.image-edit-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 1500px;
+  height: 900px;
+  text-align: center;
+
+}
+
+.edit-form-title {
+    font-family: "century gothic";
+    font-size: 45px;
+}
+
+.root-to-buttons {
+  font-family: "century gothic";
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  // align-items: flex-end;
+}
+
+.root-to-buttons a{
+  cursor: pointer;
+  padding: 5px;
+}
+
+.root-to-buttons span{
+
+  padding: 5px;
 }

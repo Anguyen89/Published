@@ -1,6 +1,7 @@
 var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 var ImageActions = require('../../actions/image_actions');
+var EditImage = require('./edit_image');
 
 var ImageDetail = React.createClass({
 
@@ -9,7 +10,7 @@ var ImageDetail = React.createClass({
   },
 
   rootToEdit(){
-
+    hashHistory.push('/edit/' + this.props.image.id);
   },
 
   deleteImage(){
@@ -21,8 +22,9 @@ var ImageDetail = React.createClass({
     if (this.props.user.id === SessionStore.currentUser().id){
       editDelete = (
         <div className="edit-delete">
-          <div onClick={this.rootToEdit}>Edit</div>
-          <div onClick={this.deleteImage}>Delete</div>
+          <a onClick={this.rootToEdit}>Edit</a>
+          <span> | </span>
+          <a onClick={this.deleteImage}>Delete</a>
         </div>
       )
     }else {

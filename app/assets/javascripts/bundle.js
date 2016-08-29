@@ -64,6 +64,7 @@
 	var App = __webpack_require__(281);
 	var Home = __webpack_require__(294);
 	var ImageShowContainer = __webpack_require__(315);
+	var EditImage = __webpack_require__(317);
 
 	var routes = React.createElement(
 	  Router,
@@ -72,7 +73,8 @@
 	    Route,
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: Home }),
-	    React.createElement(Route, { path: 'image/:id', component: ImageShowContainer })
+	    React.createElement(Route, { path: 'image/:id', component: ImageShowContainer }),
+	    React.createElement(Route, { path: '/edit/:id', component: EditImage })
 	  )
 	);
 
@@ -36049,6 +36051,17 @@
 	    ApiUtil.fetchImages(this.receiveImages);
 	  },
 
+	  fetchImage: function fetchImage(id) {
+	    ApiUtil.fetchImage(id, this.receiveImage);
+	  },
+
+	  receiveImage: function receiveImage(image) {
+	    AppDispatcher.dispatch({
+	      actionType: ImageConstants.RECEIVE_IMAGE,
+	      image: image
+	    });
+	  },
+
 	  receiveImages: function receiveImages(images) {
 	    AppDispatcher.dispatch({
 	      actionType: ImageConstants.RECEIVE_IMAGES,
@@ -36093,8 +36106,14 @@
 	      success: cb
 	    });
 	  },
+	  fetchImage: function fetchImage(id, cb) {
+	    $.ajax({
+	      url: "api/images/" + id,
+	      type: "GET",
+	      success: cb
+	    });
+	  },
 	  deleteImage: function deleteImage(image, cb) {
-	    console.log("deleting image from util");
 	    $.ajax({
 	      url: "api/images/" + image.id,
 	      type: "DELETE",
@@ -43092,13 +43111,16 @@
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(175).hashHistory;
 	var ImageActions = __webpack_require__(284);
+	var EditImage = __webpack_require__(317);
 
 	var ImageDetail = React.createClass({
 	  displayName: 'ImageDetail',
 	  rootToHome: function rootToHome() {
 	    hashHistory.push('/');
 	  },
-	  rootToEdit: function rootToEdit() {},
+	  rootToEdit: function rootToEdit() {
+	    hashHistory.push('/edit/' + this.props.image.id);
+	  },
 	  deleteImage: function deleteImage() {
 	    ImageActions.deleteImage(this.props.image);
 	  },
@@ -43109,12 +43131,17 @@
 	        'div',
 	        { className: 'edit-delete' },
 	        React.createElement(
-	          'div',
+	          'a',
 	          { onClick: this.rootToEdit },
 	          'Edit'
 	        ),
 	        React.createElement(
-	          'div',
+	          'span',
+	          null,
+	          ' | '
+	        ),
+	        React.createElement(
+	          'a',
 	          { onClick: this.deleteImage },
 	          'Delete'
 	        )
@@ -43155,6 +43182,134 @@
 	});
 
 	module.exports = ImageDetail;
+
+/***/ },
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ImageStore = __webpack_require__(296);
+	var ImageActions = __webpack_require__(284);
+	var hashHistory = __webpack_require__(175).hashHistory;
+
+	var EditImage = React.createClass({
+	  displayName: 'EditImage',
+	  getInitialState: function getInitialState() {
+	    var image = ImageStore.find(this.props.params.id);
+	    if (image) {
+	      return {
+	        title: image.title,
+	        description: image.description,
+	        url: image.image_url,
+	        album: image.album,
+	        imageType: "Photography"
+	      };
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.imageListener = ImageStore.addListener(this.handleChange);
+	    ImageActions.fetchImage(this.props.params.id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.imageListener.remove();
+	  },
+	  updateTitle: function updateTitle(e) {
+	    this.setState({ title: e.target.value });
+	  },
+	  updateImageType: function updateImageType(e) {
+	    this.setState({ imageType: e.target.value });
+	  },
+	  updateDescription: function updateDescription(e) {
+	    this.setState({ description: e.target.value });
+	  },
+	  handleChange: function handleChange() {
+	    var image = ImageStore.find(this.props.params.id);
+	    if (image) {
+	      return {
+	        title: image.title,
+	        description: image.description,
+	        url: image.image_url,
+	        album: image.album,
+	        imageType: image.imageType
+	      };
+	    }
+	  },
+	  handleSubmit: function handleSubmit(e) {
+	    e.preventDefault(e);
+	    var id = this.props.params.id;
+	    var imageData = {
+	      title: this.state.title,
+	      description: this.state.description,
+	      imate_type: this.state.imageType,
+	      id: id
+	    };
+	    ImageActions.updateImage(imageData);
+	    hashHistory.push('/image/' + id);
+	  },
+	  rootToHome: function rootToHome() {
+	    hashHistory.push('/');
+	  },
+	  rootToImage: function rootToImage() {
+	    hashHistory.push('/image/' + this.props.params.id);
+	  },
+	  render: function render() {
+
+	    return React.createElement(
+	      'div',
+	      { className: 'image-edit-form' },
+	      React.createElement(
+	        'form',
+	        { className: 'form', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'h1',
+	          { className: 'edit-form-title' },
+	          'EDIT IMAGE'
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        React.createElement('input', { type: 'text',
+	          onChange: this.updateTitle,
+	          placeholder: 'TITLE',
+	          className: 'edit-title' }),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        React.createElement('input', {
+	          type: 'textarea',
+	          className: 'edit-description',
+	          onChange: this.updateDescription,
+	          placeholder: 'DESCRIPTION'
+	        }),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        React.createElement('input', { className: 'edit-submit', type: 'submit', value: 'SAVE' })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'root-to-buttons' },
+	        React.createElement(
+	          'a',
+	          { onClick: this.rootToHome },
+	          'return to Home'
+	        ),
+	        React.createElement(
+	          'span',
+	          null,
+	          ' | '
+	        ),
+	        React.createElement(
+	          'a',
+	          { onClick: this.rootToImage },
+	          'back to Image'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = EditImage;
 
 /***/ }
 /******/ ]);
