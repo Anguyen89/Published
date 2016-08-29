@@ -36062,6 +36062,19 @@
 	    });
 	  },
 
+	  receiveUpdatedImage: function receiveUpdatedImage(image) {
+	    console.log("back from util");
+	    AppDispatcher.dispatch({
+	      actionType: ImageConstants.UPDATE_IMAGE,
+	      image: image
+	    });
+	  },
+
+	  updateImage: function updateImage(image) {
+	    console.log("sending to util");
+	    ApiUtil.updateImage(image, this.receiveUpdatedImage);
+	  },
+
 	  receiveImages: function receiveImages(images) {
 	    AppDispatcher.dispatch({
 	      actionType: ImageConstants.RECEIVE_IMAGES,
@@ -36110,6 +36123,14 @@
 	    $.ajax({
 	      url: "api/images/" + id,
 	      type: "GET",
+	      success: cb
+	    });
+	  },
+	  updateImage: function updateImage(image, cb) {
+	    $.ajax({
+	      url: "api/images/" + image.id,
+	      type: "PATCH",
+	      data: { image: image },
 	      success: cb
 	    });
 	  },
@@ -36162,7 +36183,8 @@
 	module.exports = {
 	  RECEIVE_IMAGES: "RECEIVE_IMAGES",
 	  RECEIVE_IMAGE: "RECEIVE_IMAGE",
-	  DELETE_IMAGE: "DELETE_IMAGE"
+	  DELETE_IMAGE: "DELETE_IMAGE",
+	  UPDATE_IMAGE: "UPDATE_IMAGE"
 	};
 
 /***/ },
@@ -36841,13 +36863,17 @@
 	};
 
 	var addImage = function addImage(image) {
-	  console.log('adding image to store');
 	  _images[image.id] = image;
 	};
 
 	var removeImage = function removeImage(image) {
 	  delete _images[image.id];
 	  hashHistory.push('/');
+	};
+
+	var updateImage = function updateImage(image) {
+	  console.log('updating');
+	  _images[image.id] = image;
 	};
 
 	ImageStore.all = function () {
@@ -36876,6 +36902,11 @@
 	    case ImageConstants.DELETE_IMAGE:
 	      removeImage(payload.image);
 	      this.__emitChange();
+	      break;
+	    case ImageConstants.UPDATE_IMAGE:
+	      updateImage(payload.image);
+	      this.__emitChange();
+	      break;
 	  }
 	};
 
@@ -43112,6 +43143,7 @@
 	var hashHistory = __webpack_require__(175).hashHistory;
 	var ImageActions = __webpack_require__(284);
 	var EditImage = __webpack_require__(317);
+	var ImageStore = __webpack_require__(296);
 
 	var ImageDetail = React.createClass({
 	  displayName: 'ImageDetail',
@@ -43224,18 +43256,28 @@
 	  updateDescription: function updateDescription(e) {
 	    this.setState({ description: e.target.value });
 	  },
+
+
+	  // handleChange(){
+	  //   var image = ImageStore.find(this.props.params.id);
+	  //     this.setState({
+	  //       title: image.title,
+	  //       description: image.description,
+	  //       url: image.image_url,
+	  //       album: image.album,
+	  //       imageType: image.imageType
+	  //     })
+	  // },
 	  handleChange: function handleChange() {
-	    var image = ImageStore.find(this.props.params.id);
-	    if (image) {
-	      return {
-	        title: image.title,
-	        description: image.description,
-	        url: image.image_url,
-	        album: image.album,
-	        imageType: image.imageType
-	      };
-	    }
+	    var potentialImage = ImageStore.find(this.props.params.id);
+	    var image = potentialImage ? potentialImage : {};
+	    this.setState({
+	      title: image.title,
+	      description: image.description,
+	      url: image.image_url,
+	      imageType: image.imageType });
 	  },
+
 	  handleSubmit: function handleSubmit(e) {
 	    e.preventDefault(e);
 	    var id = this.props.params.id;
@@ -43246,7 +43288,8 @@
 	      id: id
 	    };
 	    ImageActions.updateImage(imageData);
-	    hashHistory.push('/image/' + id);
+	    // hashHistory.push('/image/' + id);
+	    // hashHistory.push('/');
 	  },
 	  rootToHome: function rootToHome() {
 	    hashHistory.push('/');

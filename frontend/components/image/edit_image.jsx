@@ -41,17 +41,24 @@ var EditImage = React.createClass({
     this.setState({ description: e.target.value});
   },
 
-  handleChange(){
-    var image = ImageStore.find(this.props.params.id);
-    if (image){
-      return({
-        title: image.title,
-        description: image.description,
-        url: image.image_url,
-        album: image.album,
-        imageType: image.imageType
-      })
-    }
+  // handleChange(){
+  //   var image = ImageStore.find(this.props.params.id);
+  //     this.setState({
+  //       title: image.title,
+  //       description: image.description,
+  //       url: image.image_url,
+  //       album: image.album,
+  //       imageType: image.imageType
+  //     })
+  // },
+  handleChange: function() {
+    var potentialImage = ImageStore.find(this.props.params.id);
+    var image = potentialImage ? potentialImage : {};
+    this.setState({
+      title: image.title,
+      description: image.description,
+      url: image.image_url,
+      imageType: image.imageType});
   },
 
   handleSubmit(e){
@@ -64,7 +71,8 @@ var EditImage = React.createClass({
       id: id
     }
     ImageActions.updateImage(imageData);
-    hashHistory.push('/image/' + id);
+    // hashHistory.push('/image/' + id);
+    // hashHistory.push('/');
   },
 
   rootToHome(){

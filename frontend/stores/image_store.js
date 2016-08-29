@@ -21,13 +21,17 @@ var resetImages = function(images){
 };
 
 var addImage = function(image){
-  console.log('adding image to store');
   _images[image.id] = image;
 };
 
 var removeImage = function(image){
   delete _images[image.id];
   hashHistory.push('/');
+};
+
+var updateImage = function(image){
+  console.log('updating');
+  _images[image.id] = image;
 };
 
 ImageStore.all = function() {
@@ -57,6 +61,11 @@ ImageStore.__onDispatch = function(payload){
     case ImageConstants.DELETE_IMAGE:
       removeImage(payload.image);
       this.__emitChange();
+      break;
+    case ImageConstants.UPDATE_IMAGE:
+      updateImage(payload.image);
+      this.__emitChange();
+      break;
   }
 };
 

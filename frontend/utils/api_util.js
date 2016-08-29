@@ -14,7 +14,16 @@ module.exports = {
     $.ajax({
       url: "api/images/" + id,
       type: "GET",
-      success: cb 
+      success: cb
+    })
+  },
+
+  updateImage(image, cb){
+    $.ajax({
+      url: "api/images/" + image.id,
+      type: "PATCH",
+      data: {image: image},
+      success: cb
     })
   },
 

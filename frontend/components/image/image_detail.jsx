@@ -2,8 +2,10 @@ var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 var ImageActions = require('../../actions/image_actions');
 var EditImage = require('./edit_image');
+var ImageStore = require('../../stores/image_store');
 
 var ImageDetail = React.createClass({
+
 
   rootToHome(){
     hashHistory.push('/');
