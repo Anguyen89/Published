@@ -35941,9 +35941,12 @@
 	  goToHome: function goToHome() {
 	    hashHistory.push('/');
 	  },
-	  redirectToProfile: function redirectToProfile() {
-	    hashHistory.push('profile/' + this.state.currentUser.id);
-	  },
+
+
+	  // redirectToProfile(){
+	  //   hashHistory.push('profile/' + this.state.currentUser.id );
+	  // },
+
 	  render: function render() {
 	    var navContent;
 	    if (this.state.currentUser) {
@@ -35962,15 +35965,6 @@
 	            'a',
 	            { className: 'nav-logout', onClick: this.handleLogout },
 	            'Logout'
-	          )
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            'a',
-	            { className: 'user-profile-button', onClick: this.redirectToProfile },
-	            'Profile'
 	          )
 	        )
 	      );
