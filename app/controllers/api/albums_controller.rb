@@ -15,6 +15,7 @@ class Api::AlbumsController < ApplicationController
     else
       @errors = @album.errors.full_messages
       render "api/shared/error", status: 402
+    end
   end
 
   def update

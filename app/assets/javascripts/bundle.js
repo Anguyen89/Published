@@ -43396,16 +43396,19 @@
 	  render: function render() {
 	    var images;
 
-	    if (this.state.user) {
-	      images = this.state.user.images.map(function (images, idx) {
-	        return React.createElement(ImageIndexItem, { image: image, key: idx });
-	      });
-	    }
+	    // if (this.state.user){
+	    //   images = this.state.user.images.map(function(images, idx){
+	    //     return (
+	    //       <ImageIndexItem image={image} key={idx}/>
+	    //     )
+	    //   })
+	    // }
+
 
 	    return React.createElement(
 	      'div',
 	      { className: 'profile-feed-container' },
-	      images
+	      'Hello'
 	    );
 	  }
 	});
