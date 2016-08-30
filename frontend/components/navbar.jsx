@@ -56,6 +56,7 @@ module.exports = React.createClass({
         <ul>
           <li><Upload/></li>
           <li><a className="nav-logout" onClick={this.handleLogout}>Logout</a></li>
+
         </ul>
       )
     }else {
