@@ -35937,6 +35937,7 @@
 	  },
 	  handleLogout: function handleLogout() {
 	    SessionActions.logout();
+	    hashHistory.push('/');
 	  },
 	  goToHome: function goToHome() {
 	    hashHistory.push('/');

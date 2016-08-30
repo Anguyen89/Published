@@ -38,6 +38,7 @@ module.exports = React.createClass({
 
   handleLogout(){
     SessionActions.logout();
+    hashHistory.push('/');
   },
 
   goToHome(){
