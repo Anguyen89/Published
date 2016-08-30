@@ -65,6 +65,7 @@
 	var Home = __webpack_require__(294);
 	var ImageShowContainer = __webpack_require__(315);
 	var EditImage = __webpack_require__(317);
+	var ProfileFeed = __webpack_require__(318);
 
 	var routes = React.createElement(
 	  Router,
@@ -74,7 +75,8 @@
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: Home }),
 	    React.createElement(Route, { path: 'image/:id', component: ImageShowContainer }),
-	    React.createElement(Route, { path: '/edit/:id', component: EditImage })
+	    React.createElement(Route, { path: 'edit/:id', component: EditImage }),
+	    React.createElement(Route, { path: 'profile/:id', component: ProfileFeed })
 	  )
 	);
 
@@ -35939,6 +35941,12 @@
 	  goToHome: function goToHome() {
 	    hashHistory.push('/');
 	  },
+
+
+	  // redirectToProfile(){
+	  //   hashHistory.push('profile/' + this.state.currentUser.id );
+	  // },
+
 	  render: function render() {
 	    var navContent;
 	    if (this.state.currentUser) {
@@ -35957,15 +35965,6 @@
 	            'a',
 	            { className: 'nav-logout', onClick: this.handleLogout },
 	            'Logout'
-	          )
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            'a',
-	            { className: 'user-profile-button', onClick: this.redirectToProfile },
-	            'Profile'
 	          )
 	        )
 	      );
@@ -36063,7 +36062,6 @@
 	  },
 
 	  receiveUpdatedImage: function receiveUpdatedImage(image) {
-	    console.log("back from util");
 	    AppDispatcher.dispatch({
 	      actionType: ImageConstants.UPDATE_IMAGE,
 	      image: image
@@ -36071,7 +36069,6 @@
 	  },
 
 	  updateImage: function updateImage(image) {
-	    console.log("sending to util");
 	    ApiUtil.updateImage(image, this.receiveUpdatedImage);
 	  },
 
@@ -36141,6 +36138,13 @@
 	      success: cb
 	    });
 	  },
+	  fetchUserProfile: function fetchUserProfile(id, cb) {
+	    $.ajax({
+	      url: "api/users/" + id,
+	      type: "GET",
+	      success: cb
+	    });
+	  },
 	  createPost: function createPost(image, cb) {
 	    $.ajax({
 	      url: "api/images",
@@ -36195,34 +36199,34 @@
 
 	var AppDispatcher = __webpack_require__(259);
 	var SessionConstants = __webpack_require__(288);
-	var SessionApiUtil = __webpack_require__(285);
+	var ApiUtil = __webpack_require__(285);
 	var UserConstants = __webpack_require__(280);
 	var ErrorConstants = __webpack_require__(289);
 
 	var SessionActions = {
 
 	  fetchCurrentUser: function fetchCurrentUser() {
-	    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser);
+	    ApiUtil.fetchCurrentUser(this.receiveCurrentUser);
 	  },
 
 	  signup: function signup(loginData) {
-	    SessionApiUtil.signup(loginData, this.receiveCurrentUser);
+	    ApiUtil.signup(loginData, this.receiveCurrentUser);
 	  },
 
 	  login: function login(loginData) {
-	    SessionApiUtil.login(loginData, this.receiveCurrentUser);
+	    ApiUtil.login(loginData, this.receiveCurrentUser);
 	  },
 
 	  logout: function logout() {
-	    SessionApiUtil.logout(this.removeCurrentUser);
+	    ApiUtil.logout(this.removeCurrentUser);
 	  },
 
 	  fetchUserProfile: function fetchUserProfile(id) {
-	    SessionApiUtil.fetchUserProfile(id, this.receiveUserProfile);
+	    ApiUtil.fetchUserProfile(id, this.receiveUserProfile);
 	  },
 
 	  editUserProfile: function editUserProfile(userData) {
-	    SessionApiUtil.editUserProfile(userData);
+	    ApiUtil.editUserProfile(userData);
 	  },
 	  receiveCurrentUser: function receiveCurrentUser(user) {
 	    AppDispatcher.dispatch({
@@ -36245,6 +36249,7 @@
 	  },
 
 	  receiveUserProfile: function receiveUserProfile(user) {
+	    console.log("dispatch user profile");
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.RECEIVE_USER,
 	      user: user
@@ -36370,7 +36375,7 @@
 		},
 
 		guestLogin: function guestLogin(e) {
-			SessionActions.login({ email: "guest@example.com", password: "password" });
+			SessionActions.login({ email: "guest@random.com", password: "password" });
 		},
 
 		logout: function logout(e) {
@@ -43288,8 +43293,6 @@
 	      id: id
 	    };
 	    ImageActions.updateImage(imageData);
-	    // hashHistory.push('/image/' + id);
-	    // hashHistory.push('/');
 	  },
 	  rootToHome: function rootToHome() {
 	    hashHistory.push('/');
@@ -43353,6 +43356,94 @@
 	});
 
 	module.exports = EditImage;
+
+/***/ },
+/* 318 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(258);
+	var SessionActions = __webpack_require__(287);
+	var UserStore = __webpack_require__(319);
+	var Masonry = __webpack_require__(298);
+	// var ImageIndexItem = require('../image/image_index_item');
+
+	var ProfileFeed = React.createClass({
+	  displayName: 'ProfileFeed',
+	  getInitialState: function getInitialState() {
+	    return { current_user: SessionStore.currentUser(), user: UserStore.userProfile() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.SessionStoreListener = SessionStore.addListener(this.onChange);
+	    this.UserStoreListener = UserStore.addListener(this.changeUser);
+	    SessionActions.fetchUserProfile(parseInt(this.props.params.id));
+	  },
+	  changeUser: function changeUser() {
+	    this.setState({ user: UserStore.userProfile() });
+	  },
+	  onChange: function onChange() {
+	    this.setState({ current_user: SessionStore.currentUser() });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.SessionStoreListener.remove();
+	    this.UserStoreListener.remove();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    SessionActions.fetchUserProfile(parseInt(newProps.params.id));
+	  },
+	  render: function render() {
+	    var images;
+
+	    if (this.state.user) {
+	      images = this.state.user.images.map(function (images, idx) {
+	        return React.createElement(ImageIndexItem, { image: image, key: idx });
+	      });
+	    }
+
+	    return React.createElement(
+	      'div',
+	      { className: 'profile-feed-container' },
+	      images
+	    );
+	  }
+	});
+
+	module.exports = ProfileFeed;
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Dispatcher = __webpack_require__(259);
+	var Store = __webpack_require__(263).Store;
+	var UserConstants = __webpack_require__(280);
+
+	var UserStore = new Store(Dispatcher);
+
+	var _user = {};
+
+	var updateUser = function updateUser(user) {
+	  _user = user;
+	};
+
+	UserStore.userProfile = function () {
+	  return _user;
+	};
+
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.RECEIVE_USER:
+	      updateUser(payload.user);
+	      this.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = UserStore;
 
 /***/ }
 /******/ ]);

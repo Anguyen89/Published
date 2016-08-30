@@ -71,8 +71,6 @@ var EditImage = React.createClass({
       id: id
     }
     ImageActions.updateImage(imageData);
-    // hashHistory.push('/image/' + id);
-    // hashHistory.push('/');
   },
 
   rootToHome(){

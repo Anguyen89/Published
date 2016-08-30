@@ -21,7 +21,6 @@ module.exports = {
   },
 
   receiveUpdatedImage: function(image){
-    console.log("back from util");
     AppDispatcher.dispatch({
       actionType: ImageConstants.UPDATE_IMAGE,
       image: image
@@ -29,7 +28,6 @@ module.exports = {
   },
 
   updateImage: function(image){
-    console.log("sending to util");
     ApiUtil.updateImage(image, this.receiveUpdatedImage);
   },
 

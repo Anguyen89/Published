@@ -44,6 +44,10 @@ module.exports = React.createClass({
     hashHistory.push('/');
   },
 
+  // redirectToProfile(){
+  //   hashHistory.push('profile/' + this.state.currentUser.id );
+  // },
+
   render(){
     var navContent;
     if (this.state.currentUser){
@@ -51,7 +55,6 @@ module.exports = React.createClass({
         <ul>
           <li><Upload/></li>
           <li><a className="nav-logout" onClick={this.handleLogout}>Logout</a></li>
-          <li><a className="user-profile-button" onClick={this.redirectToProfile}>Profile</a></li>
         </ul>
       )
     }else {

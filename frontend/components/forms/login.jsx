@@ -38,7 +38,7 @@ var LoginForm = React.createClass({
 	},
 
 	guestLogin: function(e) {
-		SessionActions.login({ email: "guest@example.com", password: "password"});
+		SessionActions.login({ email: "guest@random.com", password: "password"});
 	},
 
 	logout: function(e){

@@ -20,6 +20,7 @@ var App = require('./components/app.jsx');
 var Home = require('./components/home.jsx');
 var ImageShowContainer = require('./components/image/image_show_container.jsx');
 var EditImage = require('./components/image/edit_image');
+var ProfileFeed = require('./components/profile/profile_feed');
 
 
 
@@ -31,7 +32,8 @@ var routes = (
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="image/:id" component={ImageShowContainer}/>
-      <Route path="/edit/:id" component={EditImage}/>
+      <Route path="edit/:id" component={EditImage}/>
+      <Route path="profile/:id" component={ProfileFeed}/>
 
     </Route>
 

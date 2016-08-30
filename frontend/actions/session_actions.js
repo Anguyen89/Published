@@ -2,34 +2,34 @@
 
 var AppDispatcher = require('../dispatcher/dispatcher');
 var SessionConstants = require('../constants/session_constants');
-var SessionApiUtil = require('../utils/api_util');
+var ApiUtil = require('../utils/api_util');
 var UserConstants = require('../constants/user_constants');
 var ErrorConstants = require('../constants/error_constants');
 
 var SessionActions = {
 
 	fetchCurrentUser: function() {
-    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser);
+    ApiUtil.fetchCurrentUser(this.receiveCurrentUser);
 	},
 
 	signup: function(loginData) {
-		SessionApiUtil.signup(loginData, this.receiveCurrentUser);
+		ApiUtil.signup(loginData, this.receiveCurrentUser);
 	},
 
 	login: function(loginData) {
-		SessionApiUtil.login(loginData, this.receiveCurrentUser);
+		ApiUtil.login(loginData, this.receiveCurrentUser);
 	},
 
 	logout: function() {
-		SessionApiUtil.logout(this.removeCurrentUser);
+		ApiUtil.logout(this.removeCurrentUser);
 	},
 
 	fetchUserProfile: function(id) {
-		SessionApiUtil.fetchUserProfile(id, this.receiveUserProfile);
+		ApiUtil.fetchUserProfile(id, this.receiveUserProfile);
 	},
 
 	editUserProfile: function(userData) {
-		SessionApiUtil.editUserProfile(userData);
+		ApiUtil.editUserProfile(userData);
 	},
   receiveCurrentUser: function(user){
     AppDispatcher.dispatch({
@@ -52,6 +52,7 @@ var SessionActions = {
   },
 
   receiveUserProfile: function(user) {
+		console.log("dispatch user profile");
     AppDispatcher.dispatch({
       actionType: UserConstants.RECEIVE_USER,
       user: user

@@ -36,6 +36,14 @@ module.exports = {
 
   },
 
+  fetchUserProfile(id, cb){
+    $.ajax({
+      url: "api/users/" + id,
+      type: "GET",
+      success: cb
+    })
+  },
+
   createPost(image, cb){
     $.ajax({
       url: "api/images",
