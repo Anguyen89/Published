@@ -44,6 +44,7 @@
 	font-weight: 500;
 	line-height: 26.4px;
   margin-left: 50px;
+  cursor: pointer;
 }
 
 .nav-container ul{
@@ -51,6 +52,7 @@
   margin-right: 100px;
   flex-wrap: nowrap;
   font-size: 15px;
+  cursor: pointer;
 }
 
 .nav-container ul li {
