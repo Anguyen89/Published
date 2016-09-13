@@ -30,7 +30,7 @@
   padding: 0 100px 0px 100px;
   margin-bottom: 20px;
   background: black;
-  position: fixed;
+  position: absolute;
   overflow-y: hidden;
   z-index: 1;
 }
@@ -71,9 +71,6 @@
   width: 100%;
   background-color: transparent;
 }
-
-
-
 
 .fa:hover {
   background: #D3D3D3;

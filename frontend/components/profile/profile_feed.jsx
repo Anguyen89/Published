@@ -40,17 +40,19 @@ var ProfileFeed = React.createClass({
     var images;
 
     // if (this.state.user){
-    //   images = this.state.user.images.map(function(images, idx){
+    //   images = this.state.user.images.map(function(image, idx){
     //     return (
     //       <ImageIndexItem image={image} key={idx}/>
     //     )
     //   })
+    // }else {
+    //   return <div></div>
     // }
 
 
     return (
       <div className="profile-feed-container">
-        Hello
+        {images}
       </div>
     )
 

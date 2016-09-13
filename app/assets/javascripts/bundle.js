@@ -57,14 +57,14 @@
 	var Modal = __webpack_require__(238);
 
 	window.SessionStore = __webpack_require__(258);
-	window.ImageStore = __webpack_require__(296);
-	window.ImageActions = __webpack_require__(284);
+	window.ImageStore = __webpack_require__(281);
+	window.ImageActions = __webpack_require__(283);
 
 	//Components
-	var App = __webpack_require__(281);
-	var Home = __webpack_require__(294);
-	var ImageShowContainer = __webpack_require__(315);
-	var EditImage = __webpack_require__(317);
+	var App = __webpack_require__(285);
+	var Home = __webpack_require__(295);
+	var ImageShowContainer = __webpack_require__(314);
+	var EditImage = __webpack_require__(316);
 	var ProfileFeed = __webpack_require__(318);
 
 	var routes = React.createElement(
@@ -35874,129 +35874,85 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var NavBar = __webpack_require__(282);
+	var AppDispatcher = __webpack_require__(259);
+	var ImageConstants = __webpack_require__(282);
+	var hashHistory = __webpack_require__(175).hashHistory;
 
-	// var Upload = require("./components/upload");
+	var Store = __webpack_require__(263).Store;
 
+	var ImageStore = new Store(AppDispatcher);
 
-	var App = React.createClass({
-	  displayName: 'App',
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'header',
-	        { className: 'header-nav' },
-	        React.createElement(NavBar, null)
-	      ),
-	      this.props.children
-	    );
+	var _images = {};
+
+	var resetImages = function resetImages(images) {
+	  _images = {};
+	  images.forEach(function (image) {
+	    _images[image.id] = image;
+	  });
+	};
+
+	var addImage = function addImage(image) {
+	  _images[image.id] = image;
+	};
+
+	var removeImage = function removeImage(image) {
+	  delete _images[image.id];
+	  hashHistory.push('/');
+	};
+
+	var updateImage = function updateImage(image) {
+	  console.log('updating');
+	  _images[image.id] = image;
+	};
+
+	ImageStore.all = function () {
+	  var images = [];
+	  for (var id in _images) {
+	    images.push(_images[id]);
 	  }
-	});
+	  return images;
+	};
 
-	module.exports = App;
+	ImageStore.find = function (id) {
+	  return _images[id];
+	};
+
+	ImageStore.__onDispatch = function (payload) {
+	  console.log("inside the dispatcher");
+	  switch (payload.actionType) {
+	    case ImageConstants.RECEIVE_IMAGES:
+	      resetImages(payload.images);
+	      this.__emitChange();
+	      break;
+	    case ImageConstants.RECEIVE_IMAGE:
+	      addImage(payload.image);
+	      this.__emitChange();
+	      break;
+	    case ImageConstants.DELETE_IMAGE:
+	      removeImage(payload.image);
+	      this.__emitChange();
+	      break;
+	    case ImageConstants.UPDATE_IMAGE:
+	      updateImage(payload.image);
+	      this.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = ImageStore;
 
 /***/ },
 /* 282 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
-	var React = __webpack_require__(1);
-	var Upload = __webpack_require__(283);
-	var SessionStore = __webpack_require__(258);
-	var SessionActions = __webpack_require__(287);
-	var ErrorStore = __webpack_require__(290);
-	var Login = __webpack_require__(291);
-	var SignUp = __webpack_require__(293);
-	var hashHistory = __webpack_require__(175).hashHistory;
-
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	  getInitialState: function getInitialState() {
-	    return {
-	      currentUser: SessionStore.currentUser(),
-	      errors: ErrorStore.all()
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.sessionStoreListener = SessionStore.addListener(this.onChange);
-	    this.errorStoreListener = ErrorStore.addListener(this.onErrorChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.sessionStoreListener.remove();
-	    this.errorStoreListener.remove();
-	  },
-	  onChange: function onChange() {
-	    this.setState({ currentUser: SessionStore.currentUser() });
-	  },
-	  onErrorChange: function onErrorChange() {
-	    this.setState({ errors: ErrorStore.all() });
-	  },
-	  handleLogout: function handleLogout() {
-	    SessionActions.logout();
-	    hashHistory.push('/');
-	  },
-	  goToHome: function goToHome() {
-	    hashHistory.push('/');
-	  },
-
-
-	  // redirectToProfile(){
-	  //   hashHistory.push('profile/' + this.state.currentUser.id );
-	  // },
-
-	  render: function render() {
-	    var navContent;
-	    if (this.state.currentUser) {
-	      navContent = React.createElement(
-	        'ul',
-	        null,
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(Upload, null)
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            'a',
-	            { className: 'nav-logout', onClick: this.handleLogout },
-	            'Logout'
-	          )
-	        )
-	      );
-	    } else {
-	      navContent = React.createElement(
-	        'ul',
-	        null,
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(Login, null)
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(SignUp, null)
-	        )
-	      );
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'nav-container' },
-	      React.createElement(
-	        'a',
-	        { className: 'home-button', onClick: this.goToHome },
-	        'Published'
-	      ),
-	      navContent
-	    );
-	  }
-	});
+	module.exports = {
+	  RECEIVE_IMAGES: "RECEIVE_IMAGES",
+	  RECEIVE_IMAGE: "RECEIVE_IMAGE",
+	  DELETE_IMAGE: "DELETE_IMAGE",
+	  UPDATE_IMAGE: "UPDATE_IMAGE"
+	};
 
 /***/ },
 /* 283 */
@@ -36004,46 +35960,9 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var ImageActions = __webpack_require__(284);
-	var SessionStore = __webpack_require__(258);
-
-	var Upload = React.createClass({
-	  displayName: 'Upload',
-
-	  upload: function upload(e) {
-	    e.preventDefault();
-
-	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
-	      if (error, images) {
-	        var picture = { image_url: images[0].url, user_id: SessionStore.currentUser().id };
-	        ImageActions.createPost(picture);
-	      }
-	    });
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'a',
-	      {
-	        onClick: this.upload,
-	        className: 'upload-icon' },
-	      'Upload'
-	    );
-	  }
-	});
-
-	module.exports = Upload;
-
-/***/ },
-/* 284 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var ApiUtil = __webpack_require__(285);
+	var ApiUtil = __webpack_require__(284);
 	var AppDispatcher = __webpack_require__(259);
-	var ImageConstants = __webpack_require__(286);
+	var ImageConstants = __webpack_require__(282);
 
 	module.exports = {
 
@@ -36104,7 +36023,7 @@
 	};
 
 /***/ },
-/* 285 */
+/* 284 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36180,29 +36099,182 @@
 	};
 
 /***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var NavBar = __webpack_require__(286);
+
+	// var Upload = require("./components/upload");
+
+
+	var App = React.createClass({
+	  displayName: 'App',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'header',
+	        { className: 'header-nav' },
+	        React.createElement(NavBar, null)
+	      ),
+	      this.props.children
+	    );
+	  }
+	});
+
+	module.exports = App;
+
+/***/ },
 /* 286 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	module.exports = {
-	  RECEIVE_IMAGES: "RECEIVE_IMAGES",
-	  RECEIVE_IMAGE: "RECEIVE_IMAGE",
-	  DELETE_IMAGE: "DELETE_IMAGE",
-	  UPDATE_IMAGE: "UPDATE_IMAGE"
-	};
+	var React = __webpack_require__(1);
+	var Upload = __webpack_require__(287);
+	var SessionStore = __webpack_require__(258);
+	var SessionActions = __webpack_require__(288);
+	var ErrorStore = __webpack_require__(291);
+	var Login = __webpack_require__(292);
+	var SignUp = __webpack_require__(294);
+	var hashHistory = __webpack_require__(175).hashHistory;
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	  getInitialState: function getInitialState() {
+	    return {
+	      currentUser: SessionStore.currentUser(),
+	      errors: ErrorStore.all()
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.sessionStoreListener = SessionStore.addListener(this.onChange);
+	    this.errorStoreListener = ErrorStore.addListener(this.onErrorChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionStoreListener.remove();
+	    this.errorStoreListener.remove();
+	  },
+	  onChange: function onChange() {
+	    this.setState({ currentUser: SessionStore.currentUser() });
+	  },
+	  onErrorChange: function onErrorChange() {
+	    this.setState({ errors: ErrorStore.all() });
+	  },
+	  handleLogout: function handleLogout() {
+	    SessionActions.logout();
+	    hashHistory.push('/');
+	  },
+	  goToHome: function goToHome() {
+	    hashHistory.push('/');
+	  },
+	  redirectToProfile: function redirectToProfile() {
+	    hashHistory.push('profile/' + this.state.currentUser.id);
+	  },
+
+	  // <li><a className="user-profile-button" onClick={this.redirectToProfile}>Profile</a></li>
+	  render: function render() {
+	    var navContent;
+	    if (this.state.currentUser) {
+	      navContent = React.createElement(
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(Upload, null)
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { className: 'nav-logout', onClick: this.handleLogout },
+	            'Logout'
+	          )
+	        )
+	      );
+	    } else {
+	      navContent = React.createElement(
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(Login, null)
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(SignUp, null)
+	        )
+	      );
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'nav-container' },
+	      React.createElement(
+	        'a',
+	        { className: 'home-button', onClick: this.goToHome },
+	        'Published'
+	      ),
+	      navContent
+	    );
+	  }
+	});
 
 /***/ },
 /* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ImageActions = __webpack_require__(283);
+	var SessionStore = __webpack_require__(258);
+
+	var Upload = React.createClass({
+	  displayName: 'Upload',
+
+	  upload: function upload(e) {
+	    e.preventDefault();
+
+	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
+	      if (error, images) {
+	        var picture = { image_url: images[0].url, user_id: SessionStore.currentUser().id };
+	        ImageActions.createPost(picture);
+	      }
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'a',
+	      {
+	        onClick: this.upload,
+	        className: 'upload-icon' },
+	      'Upload'
+	    );
+	  }
+	});
+
+	module.exports = Upload;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	var AppDispatcher = __webpack_require__(259);
-	var SessionConstants = __webpack_require__(288);
-	var ApiUtil = __webpack_require__(285);
+	var SessionConstants = __webpack_require__(289);
+	var ApiUtil = __webpack_require__(284);
 	var UserConstants = __webpack_require__(280);
-	var ErrorConstants = __webpack_require__(289);
+	var ErrorConstants = __webpack_require__(290);
 
 	var SessionActions = {
 
@@ -36261,7 +36333,7 @@
 	module.exports = SessionActions;
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36274,7 +36346,7 @@
 	module.exports = SessionConstants;
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36287,14 +36359,14 @@
 	module.exports = ErrorConstants;
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Dispatcher = __webpack_require__(259);
 	var Store = __webpack_require__(263).Store;
-	var ErrorConstants = __webpack_require__(289);
+	var ErrorConstants = __webpack_require__(290);
 
 	var ErrorStore = new Store(Dispatcher);
 
@@ -36329,7 +36401,7 @@
 	module.exports = ErrorStore;
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36338,9 +36410,9 @@
 	var Modal = __webpack_require__(238);
 
 	var SessionStore = __webpack_require__(258),
-	    ErrorStore = __webpack_require__(290);
-	var SessionActions = __webpack_require__(287);
-	var ErrorActions = __webpack_require__(292);
+	    ErrorStore = __webpack_require__(291);
+	var SessionActions = __webpack_require__(288);
+	var ErrorActions = __webpack_require__(293);
 
 	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
@@ -36527,12 +36599,12 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var ErrorConstants = __webpack_require__(289);
+	var ErrorConstants = __webpack_require__(290);
 	var Dispatcher = __webpack_require__(259);
 
 	var ErrorActions = {
@@ -36546,16 +36618,16 @@
 	module.exports = ErrorActions;
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(258);
-	var ErrorStore = __webpack_require__(290);
-	var ErrorActions = __webpack_require__(292);
-	var SessionActions = __webpack_require__(287);
+	var ErrorStore = __webpack_require__(291);
+	var ErrorActions = __webpack_require__(293);
+	var SessionActions = __webpack_require__(288);
 	var Modal = __webpack_require__(238);
 
 	var SignUpForm = React.createClass({
@@ -36757,7 +36829,7 @@
 	module.exports = SignUpForm;
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36765,7 +36837,7 @@
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(258);
 
-	var ImageCoursel = __webpack_require__(295);
+	var ImageCoursel = __webpack_require__(296);
 	var ImageFeed = __webpack_require__(297);
 
 	var Home = React.createClass({
@@ -36801,15 +36873,15 @@
 	module.exports = Home;
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ImageActions = __webpack_require__(284);
-	var ImageStore = __webpack_require__(296);
-	var Login = __webpack_require__(291);
+	var ImageActions = __webpack_require__(283);
+	var ImageStore = __webpack_require__(281);
+	var Login = __webpack_require__(292);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -36846,87 +36918,14 @@
 	});
 
 /***/ },
-/* 296 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(259);
-	var ImageConstants = __webpack_require__(286);
-	var hashHistory = __webpack_require__(175).hashHistory;
-
-	var Store = __webpack_require__(263).Store;
-
-	var ImageStore = new Store(AppDispatcher);
-
-	var _images = {};
-
-	var resetImages = function resetImages(images) {
-	  _images = {};
-	  images.forEach(function (image) {
-	    _images[image.id] = image;
-	  });
-	};
-
-	var addImage = function addImage(image) {
-	  _images[image.id] = image;
-	};
-
-	var removeImage = function removeImage(image) {
-	  delete _images[image.id];
-	  hashHistory.push('/');
-	};
-
-	var updateImage = function updateImage(image) {
-	  console.log('updating');
-	  _images[image.id] = image;
-	};
-
-	ImageStore.all = function () {
-	  var images = [];
-	  for (var id in _images) {
-	    images.push(_images[id]);
-	  }
-	  return images;
-	};
-
-	ImageStore.find = function (id) {
-	  return _images[id];
-	};
-
-	ImageStore.__onDispatch = function (payload) {
-	  console.log("inside the dispatcher");
-	  switch (payload.actionType) {
-	    case ImageConstants.RECEIVE_IMAGES:
-	      resetImages(payload.images);
-	      this.__emitChange();
-	      break;
-	    case ImageConstants.RECEIVE_IMAGE:
-	      addImage(payload.image);
-	      this.__emitChange();
-	      break;
-	    case ImageConstants.DELETE_IMAGE:
-	      removeImage(payload.image);
-	      this.__emitChange();
-	      break;
-	    case ImageConstants.UPDATE_IMAGE:
-	      updateImage(payload.image);
-	      this.__emitChange();
-	      break;
-	  }
-	};
-
-	module.exports = ImageStore;
-
-/***/ },
 /* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ImageStore = __webpack_require__(296);
-	var ImageActions = __webpack_require__(284);
+	var ImageStore = __webpack_require__(281);
+	var ImageActions = __webpack_require__(283);
 	var Masonry = __webpack_require__(298);
 	var Loader = __webpack_require__(311);
 	var ImageIndexItem = __webpack_require__(313);
@@ -43090,33 +43089,12 @@
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	var React = __webpack_require__(1);
-
-	var ImageShow = React.createClass({
-	  displayName: "ImageShow",
-	  render: function render() {
-	    return React.createElement(
-	      "div",
-	      { className: "image-show" },
-	      React.createElement("img", { src: this.props.image.image_url })
-	    );
-	  }
-	});
-
-	module.exports = ImageShow;
-
-/***/ },
-/* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ImageStore = __webpack_require__(296);
-	var ImageDetail = __webpack_require__(316);
-	var ImageShow = __webpack_require__(314);
+	var ImageStore = __webpack_require__(281);
+	var ImageDetail = __webpack_require__(315);
+	var ImageShow = __webpack_require__(317);
 
 	var ImageShowContainer = React.createClass({
 	  displayName: 'ImageShowContainer',
@@ -43140,16 +43118,16 @@
 	module.exports = ImageShowContainer;
 
 /***/ },
-/* 316 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(175).hashHistory;
-	var ImageActions = __webpack_require__(284);
-	var EditImage = __webpack_require__(317);
-	var ImageStore = __webpack_require__(296);
+	var ImageActions = __webpack_require__(283);
+	var EditImage = __webpack_require__(316);
+	var ImageStore = __webpack_require__(281);
 
 	var ImageDetail = React.createClass({
 	  displayName: 'ImageDetail',
@@ -43222,14 +43200,14 @@
 	module.exports = ImageDetail;
 
 /***/ },
-/* 317 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ImageStore = __webpack_require__(296);
-	var ImageActions = __webpack_require__(284);
+	var ImageStore = __webpack_require__(281);
+	var ImageActions = __webpack_require__(283);
 	var hashHistory = __webpack_require__(175).hashHistory;
 
 	var EditImage = React.createClass({
@@ -43359,6 +43337,27 @@
 	module.exports = EditImage;
 
 /***/ },
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var ImageShow = React.createClass({
+	  displayName: "ImageShow",
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "image-show" },
+	      React.createElement("img", { src: this.props.image.image_url })
+	    );
+	  }
+	});
+
+	module.exports = ImageShow;
+
+/***/ },
 /* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -43366,7 +43365,7 @@
 
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(258);
-	var SessionActions = __webpack_require__(287);
+	var SessionActions = __webpack_require__(288);
 	var UserStore = __webpack_require__(319);
 	var Masonry = __webpack_require__(298);
 	// var ImageIndexItem = require('../image/image_index_item');
@@ -43398,18 +43397,20 @@
 	    var images;
 
 	    // if (this.state.user){
-	    //   images = this.state.user.images.map(function(images, idx){
+	    //   images = this.state.user.images.map(function(image, idx){
 	    //     return (
 	    //       <ImageIndexItem image={image} key={idx}/>
 	    //     )
 	    //   })
+	    // }else {
+	    //   return <div></div>
 	    // }
 
 
 	    return React.createElement(
 	      'div',
 	      { className: 'profile-feed-container' },
-	      'Hello'
+	      images
 	    );
 	  }
 	});

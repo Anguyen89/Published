@@ -34,7 +34,6 @@ var routes = (
       <Route path="image/:id" component={ImageShowContainer}/>
       <Route path="edit/:id" component={EditImage}/>
       <Route path="profile/:id" component={ProfileFeed}/>
-
     </Route>
 
   </Router>
