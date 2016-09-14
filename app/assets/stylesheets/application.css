@@ -27,8 +27,8 @@
   align-items: center;
   height: 50px;
   width: 100%;
-  padding: 0 100px 0px 100px;
-  margin-bottom: 20px;
+  /*padding: 0 100px 0px 100px;*/
+  /*margin-bottom: 20px;*/
   background: black;
   position: fixed;
   overflow-y: hidden;
@@ -43,7 +43,7 @@
 	font-variant: normal;
 	font-weight: 500;
 	line-height: 26.4px;
-  margin-left: 50px;
+  padding-left: 50px;
   cursor: pointer;
 }
 
