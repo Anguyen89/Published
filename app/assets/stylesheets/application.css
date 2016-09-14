@@ -27,8 +27,6 @@
   align-items: center;
   height: 50px;
   width: 100%;
-  /*padding: 0 100px 0px 100px;*/
-  /*margin-bottom: 20px;*/
   background: black;
   position: fixed;
   overflow-y: hidden;
@@ -74,4 +72,23 @@
 
 .fa:hover {
   background: #D3D3D3;
+}
+
+.post-feed-footer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.footer-content li a > * {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  padding: 10px;
 }
