@@ -17,7 +17,7 @@
 
 .header-nav {
   display: flex;
-  flex-wrap: nowrap;
+  /*flex-wrap: nowrap;*/
   justify-content: center;
 }
 
@@ -50,7 +50,7 @@
 .nav-container ul{
   display: flex;
   margin-right: 100px;
-  flex-wrap: nowrap;
+  /*flex-wrap: nowrap;*/
   font-size: 15px;
   cursor: pointer;
 }
@@ -60,15 +60,15 @@
   padding: 10px;
 }
 
-.image-carousel-container {
+/*.image-carousel-container {
   display: flex;
   justify-content: center;
-}
+}*/
 
 .coursel-image {
   height: 100%;
   width: 100%;
-  background-color: transparent;
+  /*background-color: transparent;*/
 }
 
 .fa:hover {
