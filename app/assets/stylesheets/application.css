@@ -30,7 +30,7 @@
   padding: 0 100px 0px 100px;
   margin-bottom: 20px;
   background: black;
-  position: absolute;
+  position: fixed;
   overflow-y: hidden;
   z-index: 1;
 }
