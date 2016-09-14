@@ -60,10 +60,11 @@
   padding: 10px;
 }
 
-/*.image-carousel-container {
-  display: flex;
-  justify-content: center;
-}*/
+.image-carousel-container {
+  /*display: flex;
+  justify-content: center;*/
+  position: fixed;
+}
 
 .coursel-image {
   height: 100%;
