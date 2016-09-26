@@ -1,31 +1,12 @@
 
 var React = require('react');
-var ImageActions = require('../../actions/image_actions');
-var ImageStore = require('../../stores/image_store');
-var Login = require('../forms/login');
+
 
 
 
 
 module.exports = React.createClass({
 
-  // getInitialState(){
-  //   return { images: []};
-  // },
-  //
-  // componentDidMount(){
-  //   this.ImageStoreListener = ImageStore.addListener(this._onChange);
-  //   ImageActions.fetchImages();
-  // },
-  //
-  // componentWillUnmount(){
-  //   this.ImageStoreListener.remove();
-  // },
-  //
-  // _onChange(){
-  //   this.setState({images: ImageStore.all()})
-  //
-  // },
 
   render(){
     var images = [
