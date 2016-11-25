@@ -28,7 +28,7 @@
   height: 50px;
   width: 100%;
   background: black;
-  position: fixed;
+  /*position: fixed;*/
   overflow-y: hidden;
   z-index: 1;
 }
